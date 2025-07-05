@@ -1,7 +1,11 @@
-
+import Hero from "../../components/hero/Hero"
+import Categories from "./categories/Categories"
 const LandingPage = () => {
   return (
-    <div>LandingPage</div>
+    <div>
+      <Hero />
+      <Categories />
+    </div>
   )
 }
 

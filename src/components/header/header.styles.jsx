@@ -4,9 +4,12 @@ export const Wrapper = styled.header`
   padding: 2rem 4rem 1rem 4rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: sticky;
   border-bottom: 0.5px solid black;
   width: 100vw;
+  max-width: 1920px;
+  margin: 0 auto;
 `
 
 export const Logo = styled.h1`
@@ -27,6 +30,14 @@ export const HeaderRight = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+  & > img {
+    cursor: pointer;
+
+
+    &:hover {
+      transform: scale(1.1)
+    }
+  }
 `
 
 export const SearchGroup = styled.div`
@@ -46,5 +57,6 @@ export const SearchGroup = styled.div`
     position: absolute;
     right: 1px;
     height: 20px;
+    cursor: pointer;
   }
 `

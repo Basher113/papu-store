@@ -57,6 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 body {
   font-family: "Roboto", sans-serif;
   overflow-x: hidden;
+  background-color: rgb(230, 230, 230);
 }
 
 a {
@@ -68,5 +69,18 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+:root {
+  --font-xl: 48px;
+  --font-l: 40px;
+  --font-m: 24px;
+  --font-s: 16px;
+  --font-xs: 14px;
+}
+
+.carousel-item {
+  /* styles for the carousel items */
+  padding-right: 1rem;
 }
 

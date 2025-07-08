@@ -1,5 +1,5 @@
 import { Wrapper } from "./hero.styles";
-import Hero500 from "../../assets/images/m-t-uoUuGpYR79c-unsplash_5_ousymc_c_scale,w_500.jpg";
+import Hero500 from "../../assets/images/m-t-uoUuGpYR79c-unsplash_5_ousymc_c_scale,w_500.webp";
 import Hero1024 from "../../assets/images/m-t-uoUuGpYR79c-unsplash_5_ousymc_c_scale,w_1024.jpg";
 import Hero768 from "../../assets/images/m-t-uoUuGpYR79c-unsplash_5_ousymc_c_scale,w_768.jpg";
 import Hero1400 from "../../assets/images/m-t-uoUuGpYR79c-unsplash_5_ousymc_c_scale,w_1400.jpg";

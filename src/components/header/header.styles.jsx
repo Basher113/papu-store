@@ -5,15 +5,18 @@ export const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
   position: sticky;
-  border-bottom: 0.5px solid black;
+  top: 0;
+  z-index: 100;
   width: 100vw;
   max-width: 1920px;
   margin: 0 auto;
+  background-color: white;
 `
 
 export const Logo = styled.h1`
-  font-size: 1.2rem;
+  font-size: var(--font-m);
 `
 
 export const MainNav = styled.nav`
@@ -24,6 +27,10 @@ export const MainNav = styled.nav`
     list-style: none;
     gap: 1rem;
   }
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `
 
 export const HeaderRight = styled.div`
@@ -32,7 +39,6 @@ export const HeaderRight = styled.div`
   gap: 1rem;
   & > img {
     cursor: pointer;
-
 
     &:hover {
       transform: scale(1.1)
@@ -46,7 +52,6 @@ export const SearchGroup = styled.div`
   position: relative;
 
   & > input {
-    font-size: 0.8rem;
     border: none;
     background-color: rgb(235, 235, 235);
     padding: 0.5rem 3rem 0.5rem 1rem;

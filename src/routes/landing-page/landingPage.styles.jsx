@@ -16,3 +16,9 @@ export const CategoryTitle = styled.div`
   font-size: var(--font-m);
   text-transform: capitalize;
 `
+
+export const ContentContainer = styled.section`
+  padding: 0 2rem;
+  display: grid;
+  gap: 2rem;
+`

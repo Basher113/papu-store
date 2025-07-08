@@ -3,14 +3,15 @@ import Hero from "../../components/hero/Hero"
 import ProductCard from "../../components/product-card/ProductCard"
 import { useFetch } from "../../custom-hooks/useFetch"
 
-import { ProductCategoryCarouselContainer, Wrapper, CategoryTitle } from "./landingPage.styles"
+import { ProductCategoryCarouselContainer, Wrapper, CategoryTitle, ContentContainer } from "./landingPage.styles"
 const LandingPage = () => {
   const gamingProducts = useFetch("https://fakestoreapi.in/api/products/category?type=gaming&limit=8");
-  const mobileProducts = useFetch("https://fakestoreapi.in/api/products/category?type=gaming&limit=8")
+  const mobileProducts = useFetch("https://fakestoreapi.in/api/products/category?type=mobile&limit=8")
   
   return (
     <Wrapper>
       <Hero />
+      <ContentContainer>
         {!gamingProducts.loading ?
           <ProductCategoryCarouselContainer>
             <CategoryTitle>Gaming</CategoryTitle>
@@ -38,7 +39,7 @@ const LandingPage = () => {
           </ProductCategoryCarouselContainer> :
           <div>Loading...</div>
         }
-        
+      </ContentContainer>
     </Wrapper>
   )
 }

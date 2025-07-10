@@ -1,44 +1,30 @@
 import CustomCarousel from "../../components/custom-carousel/CustomCarousel"
 import Hero from "../../components/hero/Hero"
 import ProductCard from "../../components/product-card/ProductCard"
-import { useFetch } from "../../custom-hooks/useFetch"
 
 import { ProductCategoryCarouselContainer, Wrapper, CategoryTitle, ContentContainer } from "./landingPage.styles"
+import { formatProductsByCategoriesMap } from "../../utils/format-products-by-categories-map/formatProductsByCategoriesMap"
+import { useOutletContext } from "react-router-dom"
+
 const LandingPage = () => {
-  const gamingProducts = useFetch("https://fakestoreapi.in/api/products/category?type=gaming&limit=8");
-  const mobileProducts = useFetch("https://fakestoreapi.in/api/products/category?type=mobile&limit=8")
-  
+  const products = useOutletContext();
+  if (products.loading) return <div>Loading...</div>
+  const productCategoriesMap = formatProductsByCategoriesMap(products);
   return (
     <Wrapper>
       <Hero />
       <ContentContainer>
-        {!gamingProducts.loading ?
+        {Object.keys(productCategoriesMap).map((title) => (
           <ProductCategoryCarouselContainer>
-            <CategoryTitle>Gaming</CategoryTitle>
+            <CategoryTitle>{title}</CategoryTitle>
             <CustomCarousel>
-              {gamingProducts.data.products.map((gamingProduct) => {
-                const {id, title, image, price} = gamingProduct
-                return <ProductCard key={id} title={title} image={image} price={price}/>
-              })
-              }
+              {productCategoriesMap[title].filter((_, index) => index < 7).map((product) => <ProductCard key={product.id} product={product}/>)}
             </CustomCarousel>
-          </ProductCategoryCarouselContainer> :
-          <div>Loading...</div>
-        }
+          </ProductCategoryCarouselContainer>
+        ))}
 
-        {!mobileProducts.loading ?
-          <ProductCategoryCarouselContainer>
-            <CategoryTitle>Mobile</CategoryTitle>
-            <CustomCarousel>
-              {mobileProducts.data.products.map((mobileProduct) => {
-                const {id, title, image, price} = mobileProduct;
-                return <ProductCard key={id} title={title} image={image} price={price}/>
-              })
-              }
-            </CustomCarousel>
-          </ProductCategoryCarouselContainer> :
-          <div>Loading...</div>
-        }
+        
+       
       </ContentContainer>
     </Wrapper>
   )

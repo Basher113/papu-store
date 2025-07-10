@@ -6,7 +6,7 @@ const responsive = {
     // the naming can be any, depends on you.
     breakpoint: { max: 2500, min: 1300 },
     items: 4,
-    partialVisibilityGutter: 20,
+    
   },
   laptop: {
     breakpoint: { max: 1300, min: 900 },
@@ -28,7 +28,7 @@ const responsive = {
 const CustomCarousel = ({children}) => {
   return (
 
-      <Carousel swipeable={true} className="carousel" itemClass="carousel-item" containerClass="container-carousel" removeArrowOnDeviceType={["tablet", "mobile"]}  partialVisible={true} draggable responsive={responsive}>
+      <Carousel swipeable={true} className="carousel" itemClass="carousel-item" containerClass="container-carousel" removeArrowOnDeviceType={["tablet", "mobile"]} partialVisbile={true} draggable responsive={responsive}>
         {children}
       </Carousel>
 

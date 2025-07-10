@@ -18,7 +18,7 @@ export const CategoryTitle = styled.div`
 `
 
 export const ContentContainer = styled.section`
-  padding: 0 2rem;
+
   display: grid;
   gap: 2rem;
 `

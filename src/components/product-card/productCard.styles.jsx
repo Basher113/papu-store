@@ -1,22 +1,21 @@
 import styled from "styled-components";
 import Button from "../button/Button";
 
-
-
 export const Wrapper = styled.div`
   display: grid;
   grid-template-rows: 200px 150px;
   gap: 1rem;
   
   background-color: white;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
   padding: 1rem;
   border-radius: 5px;
   min-height: 300px;
   cursor: pointer;
-  transition: opacity 0.4s linear;
+  transition: transform 0.4s linear;
+
   &:hover {
-    opacity: 0.7;
+    transform: scale(1.05)
   }
   
 `

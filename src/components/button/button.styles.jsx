@@ -1,33 +1,25 @@
 import styled from "styled-components";
 
-
 export const BaseButton = styled.button`
   border-radius: 5px;
   border: none;
   transition: all 0.4s ease-in-out;
   cursor: pointer;
-  padding: 0.7em;
-  
-`;
-
-export const PrimaryButton = styled(BaseButton)`
-  background-color: rgb(19, 19, 19);
+  padding: 0.4rem;
+  background-color: #DB4444;
   color: white;
+
   &:hover {
-    background-color: rgb(255, 255, 255);
-    border: 1px solid black;
-    color: black;
+    opacity: 0.875;
+  }
+
+  &:active {
+    opacity: 0.775;
   }
 `;
 
-export const SecondaryButton = styled(BaseButton)`
-  border: 1px solid black;
-  background-color: white;
-  padding: 0.5em;
-
-  &:hover {
-    background-color: rgb(19, 19, 19);
-    color: white;
-    border: 1px solid white;
-  }
+export const AddToCartButton = styled(BaseButton)`
+  background-color: rgb(19, 19, 19);
 `;
+
+

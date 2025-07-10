@@ -1,6 +1,6 @@
 import { Wrapper, ImageContainer, InfoContainer, ProductName, ProductPriceContainer, AddToCartButton  } from "./productCard.styles"
 import { truncateStr } from "../../utils/truncate/truncate";
-import { BUTTON_TYPE_CLASSES } from "../button/Button";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/Button";
 
 const ProductCard = ({product}) => {
   const {title, image, price} = product;
@@ -16,7 +16,7 @@ const ProductCard = ({product}) => {
           <span className="discounted-price">${price}</span>
           <span className="original-price">$10</span>
         </ProductPriceContainer>
-        <AddToCartButton buttonType={BUTTON_TYPE_CLASSES.primary}>Add To Cart</AddToCartButton>
+        <Button buttonType={BUTTON_TYPE_CLASSES.addToCart}>Add To Cart</Button>
       </InfoContainer>
 
     </Wrapper>

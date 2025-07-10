@@ -2,30 +2,29 @@ import CustomCarousel from "../../components/custom-carousel/CustomCarousel"
 import Hero from "../../components/hero/Hero"
 import ProductCard from "../../components/product-card/ProductCard"
 
-import { ProductCategoryCarouselContainer, Wrapper, CategoryTitle, ContentContainer } from "./landingPage.styles"
-import { formatProductsByCategoriesMap } from "../../utils/format-products-by-categories-map/formatProductsByCategoriesMap"
-import { useOutletContext } from "react-router-dom"
+import { ProductCarouselContainer, Wrapper, CategoryTitle, ViewAllButton } from "./landingPage.styles"
+import { getPopular } from "../../utils/products/products.utils"
+import { useNavigate } from "react-router-dom"
+import { useFetch } from "../../custom-hooks/useFetch"
 
 const LandingPage = () => {
-  const products = useOutletContext();
+  const navigate = useNavigate();
+  const products = useFetch("https://fakestoreapi.in/api/products?limit=15")
+  
   if (products.loading) return <div>Loading...</div>
-  const productCategoriesMap = formatProductsByCategoriesMap(products);
+  const popularProducts = getPopular(products.data.products);
   return (
     <Wrapper>
       <Hero />
-      <ContentContainer>
-        {Object.keys(productCategoriesMap).map((title) => (
-          <ProductCategoryCarouselContainer>
-            <CategoryTitle>{title}</CategoryTitle>
-            <CustomCarousel>
-              {productCategoriesMap[title].filter((_, index) => index < 7).map((product) => <ProductCard key={product.id} product={product}/>)}
-            </CustomCarousel>
-          </ProductCategoryCarouselContainer>
-        ))}
-
-        
+      <ProductCarouselContainer>
+        <CategoryTitle>Best selling products</CategoryTitle>
+        <CustomCarousel>
+          {popularProducts.map((product) => <ProductCard key={product.id} product={product}/>)}
+        </CustomCarousel>
+        <ViewAllButton onClick={() => navigate("products")}>View All Products</ViewAllButton>
+      </ProductCarouselContainer>
        
-      </ContentContainer>
+      
     </Wrapper>
   )
 }

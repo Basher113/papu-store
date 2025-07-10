@@ -1,5 +1,6 @@
 export const formatProductsByCategoriesMap = (products) => {
-  const formattedProducts = products.data.products.reduce((acc, current) => {
+  console.log(products, "formatted?")
+  const formattedProducts = products.reduce((acc, current) => {
     
     const {id, title, image, price, discount, description, category} = current;
 
@@ -12,4 +13,8 @@ export const formatProductsByCategoriesMap = (products) => {
   }, {})
 
   return formattedProducts;
+}
+
+export const getPopular = (products) => {
+  return products.filter((product) => product.popular === true);
 }

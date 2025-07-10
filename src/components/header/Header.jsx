@@ -2,13 +2,14 @@ import { Wrapper, HeaderRight, Logo, MainNav, SearchGroup, SearchInput } from ".
 import HeartIcon from "../../assets/icons/heart.svg";
 import SearchIcon  from "../../assets/icons/search.svg";
 import CartIcon from "../../assets/icons/cart.svg";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <Wrapper>
       <Logo>Papu'Store</Logo>
       <MainNav>
         <ul>
-          <li><a href="">Home</a></li>
+          <li><Link to="/">Home</Link></li>
           <li><a href="">Contact</a></li>
           <li><a href="">About</a></li>
           <li><a href="">Categories</a></li>

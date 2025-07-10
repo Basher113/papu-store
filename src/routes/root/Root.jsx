@@ -3,8 +3,7 @@ import { Outlet } from "react-router-dom"
 import { Wrapper } from "./root.styles"
 import { useFetch } from "../../custom-hooks/useFetch"
 const Root = () => {
-  const products = useFetch("https://fakestoreapi.in/api/products");
- 
+  const products = useFetch("https://fakestoreapi.in/api/products?limit=80");
   
   return (
     <>

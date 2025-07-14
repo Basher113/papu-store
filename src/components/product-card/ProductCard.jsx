@@ -1,15 +1,15 @@
-import { Wrapper, ImageContainer, InfoContainer, ProductName, ProductPriceContainer, AddToCartButton  } from "./productCard.styles"
+import { Wrapper, ImageContainer, InfoContainer, ProductName, ProductPriceContainer, AddToCartButton, SkeletonLoaderProductImage, SkeletonLoaderProductName, SkeletonLoaderProductPrice, SkeletonLoaderAddToCartButton  } from "./productCard.styles"
 import { truncateStr } from "../../utils/truncate/truncate";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/Button";
+import SkeletonLoader from "../skeleton-loader/SkeletonLoader";
 
 const ProductCard = ({product}) => {
   const {title, image, price} = product;
 
   return (
     <Wrapper>
-      <ImageContainer>
-        <img src={image} alt={title + '. image thumbnail'} loading="lazy" width="100" height="200"/>
-      </ImageContainer>
+      <ImageContainer src={image} alt={title + '. image thumbnail'} loading="lazy" width="100" height="200" />
+       
       <InfoContainer>
         <ProductName>{truncateStr(title)}</ProductName>
         <ProductPriceContainer>
@@ -20,6 +20,25 @@ const ProductCard = ({product}) => {
       </InfoContainer>
 
     </Wrapper>
+  )
+}
+
+export const SkeletonProductCard = () => {
+  return (
+    <SkeletonLoader>
+      <Wrapper>
+        <SkeletonLoaderProductImage />
+        <InfoContainer>
+          <SkeletonLoaderProductName />
+          <SkeletonLoaderProductName />
+          <ProductPriceContainer>
+            <SkeletonLoaderProductPrice />
+            <SkeletonLoaderProductPrice />
+          </ProductPriceContainer>
+          <SkeletonLoaderAddToCartButton />
+        </InfoContainer>
+      </Wrapper>
+    </SkeletonLoader>
   )
 }
 

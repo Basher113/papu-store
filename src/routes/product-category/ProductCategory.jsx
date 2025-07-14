@@ -1,22 +1,46 @@
-import ProductCard from "../../components/product-card/ProductCard";
+import ProductCard, { SkeletonProductCard } from "../../components/product-card/ProductCard";
 
 import {  useParams } from "react-router-dom";
 
-import { Wrapper, ProductsContainer } from "./productCategory.styles";
+import { Wrapper, ProductsContainer, SkeletonLoaderCategoryTitle } from "./productCategory.styles";
 import { useFetch } from "../../custom-hooks/useFetch";
+import SkeletonLoader from "../../components/skeleton-loader/SkeletonLoader";
+
 const ProductCategory = () => {
   const {category} = useParams();
-  const categoryProducts = useFetch(`https://fakestoreapi.in/api/products/category?type=${category}`)
-  if (categoryProducts.loading) return <div>Loading...</div>
+  const url = category === "all" ? "https://fakestoreapi.in/api/products?limit=10" : `https://fakestoreapi.in/api/products/category?type=${category}&limit=10`
+  const categoryProducts = useFetch(url);
+  
   return (
     <Wrapper>
-      <h2>{category}</h2>
-      <ProductsContainer>
-        {categoryProducts.data.products.map((product) => {
-          return <ProductCard key={product.id} product={product}/>
-        })}
-      </ProductsContainer>
+      {!categoryProducts.loading ? 
+        <>
+          <h2>{category === "all" ? "All Products" : category}</h2>
+          <ProductsContainer>
+            {categoryProducts.data.products.map((product) => {
+              return <ProductCard key={product.id} product={product}/>
+            })}
+          </ProductsContainer> 
+        </> :
+        <SkeletonLoaderProductCategory />
+      }
     </Wrapper>
+  )
+}
+
+const SkeletonLoaderProductCategory = () => {
+  return (
+    <SkeletonLoader>
+      <Wrapper>
+      <SkeletonLoaderCategoryTitle />
+      <ProductsContainer>
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => {
+          return <SkeletonProductCard key={index}/>
+        })}
+      </ProductsContainer> 
+      </Wrapper>
+    </SkeletonLoader>
+        
   )
 }
 

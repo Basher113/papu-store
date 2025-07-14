@@ -25,7 +25,13 @@ export const PopularProductsPreview = styled.div`
 `
 
 export const ViewAllButton = styled(Button)`
-  
   padding: 0.5rem 5rem;
   margin: 0 auto;
+`
+
+export const SkeletonLoaderCategoryTitle = styled.div`
+  width: 20%;
+  height: 20px;
+  background-color: #D2DBE2;
+  border-radius: 7px;
 `

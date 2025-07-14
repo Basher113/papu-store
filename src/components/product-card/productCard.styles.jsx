@@ -20,17 +20,17 @@ export const Wrapper = styled.div`
   
 `
 
-export const ImageContainer = styled.div`
-  position: relative;
+export const ImageContainer = styled.img`
+  
   padding-bottom: 1rem;
   border-bottom: 1px solid black;
   
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-  }
+
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+
 `
 
 export const InfoContainer = styled.div`
@@ -67,4 +67,32 @@ export const AddToCartButton = styled(Button)`
   bottom: 0;
   padding: 0;
   flex: 0.8;
+`
+
+export const SkeletonLoaderProductImage = styled.div`
+  width: 100%;
+  min-height: 200px;
+  background-color:  #D2DBE2;
+`
+
+export const SkeletonLoaderProductName = styled.div`
+  width: 100%;
+  height: 15px;
+  background-color: #D2DBE2;
+  border-radius: 7px;
+  margin-bottom: 10px;
+`
+
+export const SkeletonLoaderProductPrice = styled.div`
+  width: 10%;
+  height: 10px;
+  border-radius: 7px;
+  background-color: #D2DBE2;
+`
+
+export const SkeletonLoaderAddToCartButton = styled.div`
+  width: 100%;
+  height: 35px;
+  border-radius: 10px;
+  background-color: #D2DBE2;
 `

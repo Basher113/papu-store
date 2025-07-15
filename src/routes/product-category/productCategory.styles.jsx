@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: grid;
-  padding: 1rem 0;
+  padding: 1rem;
   gap: 1rem;
   & > h2 {
     text-transform: capitalize;

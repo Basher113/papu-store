@@ -20,9 +20,21 @@ export const Wrapper = styled.header`
   }
 `
 
-export const Logo = styled.h1`
-  font-size: var(--font-m);
+export const Logo = styled.div`
+  display: flex;
   cursor: pointer;
+  align-items: center;
+  caret-color: transparent;
+  gap: 0.5rem;
+  & > img {
+    min-width: 30px;
+  }
+
+  & > div {
+    font-weight: 700;
+    font-size: var(--font-m);
+  }
+
 `
 
 export const MainNav = styled.nav`
@@ -45,7 +57,6 @@ export const HeaderRight = styled.div`
   gap: 1rem;
   & > img {
     cursor: pointer;
-    
     &:hover {
       transform: scale(1.1)
     }
@@ -68,6 +79,10 @@ export const SearchGroup = styled.div`
   @media (max-width: 660px) {
     & > img {
       position: static;
+      
+      &:hover {
+        transform: scale(1.1)
+      }
     }
   }
 `

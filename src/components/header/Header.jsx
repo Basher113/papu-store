@@ -3,12 +3,16 @@ import { Wrapper, HeaderRight, Logo, MainNav, SearchGroup, SearchInput } from ".
 import HeartIcon from "../../assets/icons/heart.svg";
 import SearchIcon  from "../../assets/icons/search.svg";
 import CartIcon from "../../assets/icons/cart.svg";
+import LogoIcon from "../../assets/icons/logo.png"
 
 const Header = () => {
   const navigate = useNavigate();
   return (
     <Wrapper>
-      <Logo onClick={() => navigate("/")}>Papu'Store</Logo>
+      <Logo onClick={() => navigate("/")}>
+        <img src={LogoIcon} alt="logo" width="30" />
+        <div>Papu'Store</div>
+      </Logo>
       <MainNav>
         <ul>
           <li><Link to="/">Home</Link></li>

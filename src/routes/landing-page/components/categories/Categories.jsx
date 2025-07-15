@@ -49,7 +49,7 @@ const Categories = () => {
       <CategoriesList>
         {categories.map(category => (
           <CategoryItem key={category.id} onClick={() => navigate(`products/${category.title}`)}>
-            <img src={category.icon} alt="phone icon" height="24" width="24" loading="lazy"/>
+            <img src={category.icon} alt="phone icon" height="30" width="30" loading="lazy"/>
             <div>{category.title}</div>
           </CategoryItem>
         ))}

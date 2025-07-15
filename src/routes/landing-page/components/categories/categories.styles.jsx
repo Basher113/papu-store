@@ -36,6 +36,10 @@ export const CategoryItem = styled.div`
     transform: scale(1.05);
   }
 
+  & > img {
+    object-fit: cover;
+  }
+
   & > div {
     text-transform: capitalize;
   }

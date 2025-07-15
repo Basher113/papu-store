@@ -22,6 +22,7 @@ export const Wrapper = styled.header`
 
 export const Logo = styled.h1`
   font-size: var(--font-m);
+  cursor: pointer;
 `
 
 export const MainNav = styled.nav`

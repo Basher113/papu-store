@@ -1,12 +1,14 @@
+import { Link, useNavigate } from "react-router-dom";
 import { Wrapper, HeaderRight, Logo, MainNav, SearchGroup, SearchInput } from "./header.styles";
 import HeartIcon from "../../assets/icons/heart.svg";
 import SearchIcon  from "../../assets/icons/search.svg";
 import CartIcon from "../../assets/icons/cart.svg";
-import { Link } from "react-router-dom";
+
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <Wrapper>
-      <Logo>Papu'Store</Logo>
+      <Logo onClick={() => navigate("/")}>Papu'Store</Logo>
       <MainNav>
         <ul>
           <li><Link to="/">Home</Link></li>

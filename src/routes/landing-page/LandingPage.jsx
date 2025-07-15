@@ -6,7 +6,7 @@ import { ProductCarouselContainer, Wrapper, CategoryTitle, ViewAllButton, Skelet
 import { getPopular } from "../../utils/products/products.utils"
 import { useNavigate } from "react-router-dom"
 import { useFetch } from "../../custom-hooks/useFetch"
-import SkeletonLoader from "../../components/skeleton-loader/SkeletonLoader"
+import Categories from "./components/categories/Categories"
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -20,9 +20,7 @@ const LandingPage = () => {
     <Wrapper>
       <Hero />
       <ProductCarouselContainer>
-        
         <CategoryTitle>Best selling products</CategoryTitle>
-       
         <CustomCarousel>
           {!products.loading ? 
             popularProducts.map((product) => <ProductCard key={product.id} product={product}/>) :
@@ -31,7 +29,8 @@ const LandingPage = () => {
         </CustomCarousel>
         <ViewAllButton onClick={() => navigate("products/all")}>View All Products</ViewAllButton>
       </ProductCarouselContainer>
-       
+      
+      <Categories />
       
     </Wrapper>
   )

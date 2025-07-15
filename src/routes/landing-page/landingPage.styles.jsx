@@ -4,12 +4,13 @@ import Button from "../../components/button/Button";
 export const Wrapper = styled.section`
   padding-bottom: 5rem;
   display: grid;
-  gap: 2rem;
+  gap: 5rem;
 `
 
 export const ProductCarouselContainer = styled.div`
   display: grid;
   gap: 1.5rem;
+  padding: 0 1rem;
 `
 
 export const CategoryTitle = styled.div`

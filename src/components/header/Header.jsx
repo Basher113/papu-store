@@ -28,7 +28,7 @@ const Header = ({cartCount}) => {
           <img src={SearchIcon} alt="search icon" height="24" width="24" />
         </SearchGroup>
         <img src={HeartIcon} alt="heart icon" height="24" width="24"/>
-        <CartIconContainer onClick={() => navigate("checkout")}>
+        <CartIconContainer onClick={() => navigate("cart")}>
           <img src={CartIcon} alt="cart icon" height="24" width="24"/>
           <span>{cartCount}</span>
         </CartIconContainer>

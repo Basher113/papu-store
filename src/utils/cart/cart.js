@@ -16,3 +16,13 @@ export const getCartCount = (existingCart) => {
   return count;
 }
 
+export const updateCartProductQuantity = (existingCart, cartId, newQuantity) => {
+  const matchCartProduct = existingCart.find(cart => cart.id === cartId);
+
+  if (matchCartProduct) {
+    return existingCart.map(cart => cart.id === cartId ? {...cart, quantity: newQuantity} : cart);
+  }
+
+  return existingCart;
+}
+

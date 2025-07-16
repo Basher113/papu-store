@@ -4,12 +4,6 @@ export const Wrapper = styled.section`
   padding: 3rem 1rem;
   display: grid;
   gap: 1rem;
-
-  
-
-
-
-
   input[type=number] {
     width: 60px;
     padding: .5rem;
@@ -30,6 +24,11 @@ export const CartHeader = styled.div`
   }
 `
 
+export const CartProductList = styled.div`
+  display: grid;
+  gap: 1rem;
+`
+
 export const CartProduct = styled(CartHeader)`
   padding: 2rem;
   & > div {
@@ -45,8 +44,18 @@ export const ProductRow = styled.div`
   align-items: center;
   gap: 0.75rem;
   justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    
+    & > span {
+      text-decoration: underline;
+    }
+  }
+
 
   & > img {
+    
     width: 50px;
     height: auto;
   }

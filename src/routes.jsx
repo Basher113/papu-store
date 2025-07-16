@@ -1,4 +1,4 @@
-import Checkout from "./routes/checkout/Checkout";
+import Cart from "./routes/cart/Cart";
 import LandingPage from "./routes/landing-page/LandingPage";
 import ProductCategory from "./routes/product-category/ProductCategory";
 
@@ -18,8 +18,8 @@ export const routes = [
         element: <ProductCategory />
       },
       {
-        path: "checkout",
-        element: <Checkout />
+        path: "cart",
+        element: <Cart />
       }
     ]
   }

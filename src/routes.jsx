@@ -1,3 +1,4 @@
+import Checkout from "./routes/checkout/Checkout";
 import LandingPage from "./routes/landing-page/LandingPage";
 import ProductCategory from "./routes/product-category/ProductCategory";
 
@@ -15,6 +16,10 @@ export const routes = [
       {
         path: "products/:category",
         element: <ProductCategory />
+      },
+      {
+        path: "checkout",
+        element: <Checkout />
       }
     ]
   }

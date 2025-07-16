@@ -10,7 +10,7 @@ import Categories from "./components/categories/Categories"
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const products = useFetch("https://fakestoreapi.in/api/products?limit=15")
+  const products = useFetch("https://fakestoreapi.in/api/products?limit=15");
   let popularProducts = []
   if (!products.loading) {
     popularProducts = getPopular(products.data.products);

@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Wrapper, HeaderRight, Logo, MainNav, SearchGroup, SearchInput } from "./header.styles";
+import { Wrapper, HeaderRight, Logo, MainNav, SearchGroup, SearchInput, CartIconContainer } from "./header.styles";
 import HeartIcon from "../../assets/icons/heart.svg";
 import SearchIcon  from "../../assets/icons/search.svg";
 import CartIcon from "../../assets/icons/cart.svg";
 import LogoIcon from "../../assets/icons/logo.png"
 
-const Header = () => {
+
+const Header = ({cartCount}) => {
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -27,7 +28,10 @@ const Header = () => {
           <img src={SearchIcon} alt="search icon" height="24" width="24" />
         </SearchGroup>
         <img src={HeartIcon} alt="heart icon" height="24" width="24"/>
-        <img src={CartIcon} alt="cart icon" height="24" width="24"/>
+        <CartIconContainer onClick={() => navigate("checkout")}>
+          <img src={CartIcon} alt="cart icon" height="24" width="24"/>
+          <span>{cartCount}</span>
+        </CartIconContainer>
       </HeaderRight>
     </Wrapper>
   )

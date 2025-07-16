@@ -2,21 +2,30 @@ import { Wrapper, ImageContainer, InfoContainer, ProductName, ProductPriceContai
 import { truncateStr } from "../../utils/truncate/truncate";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/Button";
 import SkeletonLoader from "../skeleton-loader/SkeletonLoader";
+import { useOutletContext } from "react-router-dom";
+import { addProductToCart } from "../../utils/cart/cart";
 
 const ProductCard = ({product}) => {
   const {title, image, price} = product;
+  const {cart, setCart} = useOutletContext();
+  
+  const addToCartHandler = () => {
+    setCart(addProductToCart(cart, product))
+  }
+
+  console.log(cart);
 
   return (
     <Wrapper>
       <ImageContainer src={image} alt={title + '. image thumbnail'} loading="lazy" width="100" height="200" />
        
       <InfoContainer>
-        <ProductName>{truncateStr(title)}</ProductName>
+        <ProductName>{truncateStr(title, 60)}</ProductName>
         <ProductPriceContainer>
           <span className="discounted-price">${price}</span>
           <span className="original-price">$10</span>
         </ProductPriceContainer>
-        <Button buttonType={BUTTON_TYPE_CLASSES.addToCart}>Add To Cart</Button>
+        <Button onClick={addToCartHandler} buttonType={BUTTON_TYPE_CLASSES.addToCart}>Add To Cart</Button>
       </InfoContainer>
 
     </Wrapper>

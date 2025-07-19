@@ -78,13 +78,16 @@ ul {
   --font-m: 24px;
   --font-s: 16px;
   --font-xs: 14px;
-
   --color-loader: #D2DBE2;
 }
 
 .carousel-item {
   /* styles for the carousel items */
   padding-left: 0.8rem;
+}
+
+img, picture {
+  caret-color: transparent;
 }
 
 

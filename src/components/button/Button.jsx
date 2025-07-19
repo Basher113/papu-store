@@ -1,15 +1,18 @@
-import {  BaseButton, AddToCartButton } from "./button.styles";
+import {  BaseButton, AddToCartButton, HelperButton } from "./button.styles";
 
 export const BUTTON_TYPE_CLASSES = { // eslint-disable-line
   base: "base",
   addToCart: "addToCart",
+  helper: "helper"
 };
 
 const getButton = (buttonType = BUTTON_TYPE_CLASSES.base) => {
   let CustomButton = BaseButton;
   if (BUTTON_TYPE_CLASSES[buttonType] === BUTTON_TYPE_CLASSES.addToCart) {
     CustomButton = AddToCartButton;
-  } 
+  } else if (BUTTON_TYPE_CLASSES[buttonType] === BUTTON_TYPE_CLASSES.helper) {
+    CustomButton = HelperButton;
+  }
   return CustomButton;
 };
 

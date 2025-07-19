@@ -1,14 +1,13 @@
 import styled from "styled-components";
+import Button from "../../components/button/Button";
 
 export const Wrapper = styled.section`
   padding: 3rem 1rem;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  
   gap: 1rem;
-  input[type=number] {
-    width: 60px;
-    padding: .5rem;
-    text-align: center;
-  }
+  
 `
 
 export const CartHeader = styled.div`
@@ -36,7 +35,11 @@ export const CartProduct = styled(CartHeader)`
     text-align: center;
   }
 
-
+  input[type=number] {
+    width: 60px;
+    padding: .5rem;
+    text-align: center;
+  }
 `
 
 export const ProductRow = styled.div`
@@ -55,8 +58,12 @@ export const ProductRow = styled.div`
 
 
   & > img {
-    
     width: 50px;
     height: auto;
   }
+`
+
+export const ReturnButton = styled(Button)`
+  width: 250px;
+  padding: 0.8em 0;
 `

@@ -17,9 +17,9 @@ const Header = ({cartCount}) => {
       <MainNav>
         <ul>
           <li><Link to="/">Home</Link></li>
-          <li><a href="">Contact</a></li>
-          <li><a href="">About</a></li>
-          <li><a href="">Categories</a></li>
+          <li><Link>Contact</Link></li>
+          <li><Link>About</Link></li>
+          <li><Link>Categories</Link></li>
         </ul>
       </MainNav>
       <HeaderRight>

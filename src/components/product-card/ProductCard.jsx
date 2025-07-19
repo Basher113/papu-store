@@ -2,21 +2,24 @@ import { Wrapper, ImageContainer, InfoContainer, ProductName, ProductPriceContai
 import { truncateStr } from "../../utils/truncate/truncate";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/Button";
 import SkeletonLoader from "../skeleton-loader/SkeletonLoader";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { addProductToCart } from "../../utils/cart/cart";
 
 const ProductCard = ({product}) => {
-  const {title, image, price} = product;
+  const navigate = useNavigate()
+  const {title, image, price, id} = product;
   const {cart, setCart} = useOutletContext();
   
-  const addToCartHandler = () => {
+  const addToCartHandler = (e) => {
+    e.stopPropagation(); // for propagete or don't call the wrapper onClick
     setCart(addProductToCart(cart, product))
   }
+
 
   console.log(cart);
 
   return (
-    <Wrapper>
+    <Wrapper onClick={() => navigate(`/product-detail/${id}`)}>
       <ImageContainer src={image} alt={title + '. image thumbnail'} loading="lazy" width="100" height="200" />
        
       <InfoContainer>
@@ -25,7 +28,7 @@ const ProductCard = ({product}) => {
           <span className="discounted-price">${price}</span>
           <span className="original-price">$10</span>
         </ProductPriceContainer>
-        <Button onClick={addToCartHandler} buttonType={BUTTON_TYPE_CLASSES.addToCart}>Add To Cart</Button>
+        <Button onClick={(e) => addToCartHandler(e)} buttonType={BUTTON_TYPE_CLASSES.addToCart}>Add To Cart</Button>
       </InfoContainer>
 
     </Wrapper>

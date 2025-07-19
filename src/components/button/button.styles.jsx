@@ -22,4 +22,15 @@ export const AddToCartButton = styled(BaseButton)`
   background-color: rgb(19, 19, 19);
 `;
 
+export const HelperButton = styled(BaseButton)`
+  color: black;
+  background-color: transparent;
+  border: 0.5px solid black;
+
+  &:hover {
+    background-color: rgb(19, 19, 19);
+    color: white;
+  }
+`
+
 

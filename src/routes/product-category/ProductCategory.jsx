@@ -2,9 +2,11 @@ import ProductCard, { SkeletonProductCard } from "../../components/product-card/
 
 import {  useParams } from "react-router-dom";
 
-import { Wrapper, ProductsContainer, SkeletonLoaderCategoryTitle } from "./productCategory.styles";
+import { Wrapper, ProductsContainer, SkeletonLoaderCategoryTitle, ViewMoreButton } from "./productCategory.styles";
 import { useFetch } from "../../custom-hooks/useFetch";
+
 import SkeletonLoader from "../../components/skeleton-loader/SkeletonLoader";
+import Button from "../../components/button/Button";
 
 const ProductCategory = () => {
   const {category} = useParams();
@@ -20,7 +22,8 @@ const ProductCategory = () => {
             {categoryProducts.data.products.map((product) => {
               return <ProductCard key={product.id} product={product}/>
             })}
-          </ProductsContainer> 
+          </ProductsContainer>
+          <ViewMoreButton>View More</ViewMoreButton>
         </> :
         <SkeletonLoaderProductCategory />
       }

@@ -3,14 +3,15 @@ import {truncateStr} from "../../utils/truncate/truncate"
 import { useOutletContext, useParams } from 'react-router-dom'
 import { useFetch } from '../../custom-hooks/useFetch'
 import Button, { BUTTON_TYPE_CLASSES } from '../../components/button/Button'
-import { ProductDetailContainer, ProductInfo, Wrapper } from './productDetail.styles'
+import { ProductDetailContainer, ProductInfo, SkeletonProductDetailImage, SkeletonProductDetailTitle, SkeletonProductDetailPrice, Wrapper, SkeletonProductDetailDescription, SkeletonLoaderProductDetailButton } from './productDetail.styles'
+import SkeletonLoader from '../../components/skeleton-loader/SkeletonLoader'
 
 const ProductDetail = () => {
   const {productId} = useParams();
   const {cart, setCart} = useOutletContext();
   const product = useFetch(`https://fakestoreapi.in/api/products/${productId}`);
 
-  if (product.loading) return <div>Loading...</div>
+  if (product.loading) return <SkeletonLoaderProductDetail />
   
   const addToCartHandler = () => {
     setCart(addProductToCart(cart, product.data.product))
@@ -31,6 +32,37 @@ const ProductDetail = () => {
         </ProductInfo>
       </ProductDetailContainer>
     </Wrapper>
+  )
+}
+
+const SkeletonLoaderProductDetail = () => {
+  return (
+    <SkeletonLoader>
+      <Wrapper>
+        <ProductDetailContainer>
+          <SkeletonProductDetailImage />
+          <ProductInfo>
+            <SkeletonProductDetailTitle />
+            <SkeletonProductDetailTitle />
+            <SkeletonProductDetailPrice />
+            <SkeletonProductDetailDescription />
+            <SkeletonProductDetailDescription />
+            <SkeletonProductDetailDescription />
+            <SkeletonProductDetailDescription />
+            <SkeletonProductDetailDescription />
+            <SkeletonProductDetailDescription />
+            <SkeletonProductDetailDescription />
+            <SkeletonProductDetailDescription />
+            <SkeletonProductDetailDescription />
+            <SkeletonProductDetailDescription />
+            <div className='buttons-container'>
+              <SkeletonLoaderProductDetailButton />
+              <SkeletonLoaderProductDetailButton />
+            </div>
+          </ProductInfo>
+        </ProductDetailContainer>
+      </Wrapper>
+    </SkeletonLoader>
   )
 }
 

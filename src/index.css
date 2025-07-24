@@ -90,5 +90,14 @@ img, picture {
   caret-color: transparent;
 }
 
+@media (max-width: 1024px) {
+  :root {
+    --font-xl: 42px;
+    --font-l: 32px;
+    --font-m: 20px;
+  }
+
+}
+
 
 

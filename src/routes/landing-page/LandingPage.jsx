@@ -3,18 +3,17 @@ import Hero from "../../components/hero/Hero"
 import ProductCard, { SkeletonProductCard } from "../../components/product-card/ProductCard"
 
 import { ProductCarouselContainer, Wrapper, CategoryTitle, ViewAllButton, SkeletonLoaderCategoryTitle } from "./landingPage.styles"
-import { getPopular } from "../../utils/products/products.utils"
 import { useNavigate } from "react-router-dom"
 import { useFetch } from "../../custom-hooks/useFetch"
 import Categories from "./components/categories/Categories"
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const products = useFetch("https://fakestoreapi.in/api/products?limit=15");
+  const products = useFetch("https://fakestoreapi.com/products");
   let popularProducts = []
-  if (!products.loading) {
-    popularProducts = getPopular(products.data.products);
-  }
+  // if (!products.loading) {
+  //   popularProducts = getPopular(products.data.products);
+  // }
   
   return (
     <Wrapper>

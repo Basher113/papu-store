@@ -7,16 +7,26 @@ import LogoIcon from "../../assets/icons/logo.png";
 
 import { useGetCurrentUserQuery } from "../../reducers/slice/api/api.slice";
 import { useSelector } from "react-redux";
+import { useLogoutUserMutation } from "../../reducers/slice/api/api.slice";
 
 const Header = ({cartCount}) => {
   const navigate = useNavigate();
   const {isLoading, error} = useGetCurrentUserQuery();
+  const [logout, {isLoading: logoutLoading}] = useLogoutUserMutation();
   const user = useSelector(state => state.user.currentUser);
   console.log(user);
   console.log(error);
   
 
   if (isLoading) return <div>Loading...</div>
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+    } catch (error) {
+      console.log("Error logout", error)
+    }
+  }
   return (
     <Wrapper>
       <Logo onClick={() => navigate("/")}>
@@ -29,7 +39,10 @@ const Header = ({cartCount}) => {
           <li><Link>Contact</Link></li>
           <li><Link>About</Link></li>
           <li><Link>Categories</Link></li>
-          <li><Link to="/login">Login</Link></li>
+          {user 
+          ?  <li><Link onClick={handleLogout}>Logout</Link></li>
+          :  <li><Link to="/login">Login</Link></li>
+          }
         </ul>
       </MainNav>
       <HeaderRight>

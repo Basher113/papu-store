@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -6,7 +7,7 @@ export const Wrapper = styled.div`
   padding: 1em 0;
 `
 
-export const LoginContentContainer = styled.div`
+export const AuthContentContainer = styled.div`
   display: flex;
   height: 600px;
   
@@ -22,7 +23,7 @@ export const ImageContainer = styled.div`
 `
 
 export const FormContainer = styled.form`
-  padding: 2rem;
+  padding: 0 2rem;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -63,18 +64,30 @@ export const FormInputContainer = styled.div`
 
 export const FormButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: 1rem;
-
   & > button {
-    flex: 0.4;
-    padding-top: 0.6rem;
-    padding-bottom: 0.6rem;
-    min-width: 100px;
-  }
-
-  a {
-    color: #DB4444;
+    flex: 1;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
   }
 `
+
+export const AuthFooter = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin: 0 auto;
+  align-items: center;
+`
+
+export const ForgetPasswordLink = styled(Link)`
+  color: #DB4444;
+  margin-left: auto;
+`
+
+export const LoginAndSignUpLink = styled(Link)`
+  color: #828282;
+  border-bottom: 1px solid #828282;
+  font-weight: 500;
+`
+

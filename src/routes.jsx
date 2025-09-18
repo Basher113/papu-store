@@ -2,6 +2,8 @@ import Cart from "./routes/cart/Cart";
 import LandingPage from "./routes/landing-page/LandingPage";
 import ProductCategory from "./routes/product-category/ProductCategory";
 import ProductDetail from "./routes/product-detail/ProductDetail";
+import Login from "./routes/login/Login";
+import SignUp from "./routes/signup/SignUp";
 import Root from "./routes/root/Root";
 
 export const routes = [
@@ -25,6 +27,16 @@ export const routes = [
       {
         path: "cart",
         element: <Cart />
+      },
+
+      {
+        path: "login",
+        element: <Login />
+      },
+
+      {
+        path: "sign-up",
+        element: <SignUp />
       }
     ]
   }

@@ -37,6 +37,11 @@ export const FormHeader = styled.div`
   }
 `
 
+export const ErrorMessage = styled.span`
+  color: red;
+  font-size: var(--font-xs);
+`
+
 export const FormInputContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,8 +62,6 @@ export const FormInputContainer = styled.div`
     &::placeholder {
       font-size: 0.8rem;
     }
-
-   
   }
 `
 

@@ -4,7 +4,7 @@ import { useLoginUserMutation } from "../../reducers/slice/api/api.slice";
 
 import urlSecrets from "../../secrets/url.secret";
 
-import { Wrapper, AuthContentContainer, ImageContainer, FormContainer, FormHeader, FormInputContainer, FormButtonContainer, ForgetPasswordLink, AuthFooter, LoginAndSignUpLink } from "../../components/auth-form/authForm.styles";
+import { Wrapper, AuthContentContainer, ImageContainer, FormContainer, FormHeader, FormInputContainer, FormButtonContainer, ForgetPasswordLink, AuthFooter, LoginAndSignUpLink, ErrorMessage } from "../../components/auth-form/authForm.styles";
 import Button from "../../components/button/Button";
 const defaultFormFields = {
   email: "",
@@ -15,7 +15,7 @@ const Login = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const {email, password} = formFields;
 
-  const [login, {isLoading}] = useLoginUserMutation();
+  const [login, {isLoading, isError, error}] = useLoginUserMutation();
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -46,6 +46,11 @@ const Login = () => {
             <div>Log in to Exclusive</div>
             <p>Enter your details below</p>
           </FormHeader>
+          {isError && 
+            (<ErrorMessage>
+              {error?.data?.message || "Something went wrong. Please try again."}
+            </ErrorMessage>)
+          }
           <FormInputContainer>
             <input onChange={handleChange} type="text" placeholder="Email" name="email" value={email} />
             <input onChange={handleChange} type="password" placeholder="Password" name="password" value={password} />

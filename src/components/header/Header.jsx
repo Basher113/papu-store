@@ -6,20 +6,14 @@ import CartIcon from "../../assets/icons/cart.svg";
 import LogoIcon from "../../assets/icons/logo.png";
 
 import { useGetCurrentUserQuery } from "../../reducers/slice/api/api.slice";
-import { useSelector } from "react-redux";
 import { useLogoutUserMutation } from "../../reducers/slice/api/api.slice";
 
 const Header = ({cartCount}) => {
   const navigate = useNavigate();
-  const {isLoading, error} = useGetCurrentUserQuery();
-  const [logout, {isLoading: logoutLoading}] = useLogoutUserMutation();
-  const user = useSelector(state => state.user.currentUser);
-  console.log(user);
-  console.log(error);
-  
-
-  if (isLoading) return <div>Loading...</div>
-
+  const {data: currentUser, error, } = useGetCurrentUserQuery();
+  const [logout, {isLoading}] = useLogoutUserMutation();
+  console.log(currentUser);
+  console.log(isLoading)
   const handleLogout = async () => {
     try {
       await logout().unwrap();
@@ -39,7 +33,7 @@ const Header = ({cartCount}) => {
           <li><Link>Contact</Link></li>
           <li><Link>About</Link></li>
           <li><Link>Categories</Link></li>
-          {user 
+          {currentUser && !error
           ?  <li><Link onClick={handleLogout}>Logout</Link></li>
           :  <li><Link to="/login">Login</Link></li>
           }
@@ -51,7 +45,7 @@ const Header = ({cartCount}) => {
           <img src={SearchIcon} alt="search icon" height="24" width="24" />
         </SearchGroup>
         <img src={HeartIcon} alt="heart icon" height="24" width="24"/>
-        {user && <CartIconContainer onClick={() => navigate("cart")}>
+        {currentUser && !error && <CartIconContainer onClick={() => navigate("cart")}>
           <img src={CartIcon} alt="cart icon" height="24" width="24"/>
           <span>{cartCount}</span>
         </CartIconContainer>}

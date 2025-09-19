@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { loggedOut, setCurrentUser } from '../user/user.slice';
 
 import urlSecrets from '../../../secrets/url.secret';
 
@@ -19,7 +18,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     if (refreshResult.data) {
       result = await baseQuery(args, api, extraOptions);
     } else {
-      api.dispatch(loggedOut());
+      console.log(refreshResult.error);
     }
   };
 
@@ -28,17 +27,12 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
+  tagTypes: ['User'],
+  keepUnusedDataFor: 60 * 5, // 5 minutes cache
   endpoints: builder => ({
     getCurrentUser: builder.query({
       query: () => "users/profile",
-      async onQueryStarted (args, {dispatch, queryFulfilled}) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(setCurrentUser(data)); // store the currentUser data in redux.
-        } catch (error) {
-          console.log("getCurrentUser endpoint Error:", error);
-        }
-      },
+      providesTags: ["User"],
     }),
 
     registerUser: builder.mutation({
@@ -55,14 +49,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: credentials
       }),
-      async onQueryStarted(args, {dispatch, queryFulfilled}) {
-        try {
-          const {data} = await queryFulfilled;
-          dispatch(setCurrentUser(data)); // store the currentUser data in redux.
-        } catch (error) {
-          console.log("loginUser Endpoint Error:", error);
-        }
-      }
+      invalidatesTags: ["User"],
     }),
 
     logoutUser: builder.mutation({
@@ -70,16 +57,8 @@ export const apiSlice = createApi({
         url: "auth/logout",
         method: "POST"
       }),
-      async onQueryStarted(args, {dispatch, queryFulfilled}) {
-        try {
-          const {data} = await queryFulfilled;
-          console.log(data);
-          dispatch(loggedOut());
-        } catch (error) {
-          console.log("LogoutUser Endpoint Error:", error);
-        }
-      }
-    })
+      invalidatesTags: ["User"],
+    }),
 
   }),
 });

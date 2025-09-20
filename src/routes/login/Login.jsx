@@ -6,6 +6,7 @@ import urlSecrets from "../../secrets/url.secret";
 
 import { Wrapper, AuthContentContainer, ImageContainer, FormContainer, FormHeader, FormInputContainer, FormButtonContainer, ForgetPasswordLink, AuthFooter, LoginAndSignUpLink, ErrorMessage } from "../../components/auth-form/authForm.styles";
 import Button from "../../components/button/Button";
+import { toast } from "react-toastify";
 const defaultFormFields = {
   email: "",
   password: "",
@@ -26,6 +27,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(formFields).unwrap();
+      toast.success("Signed in successfully!")
       navigate("/");
     } catch (error) {
       console.log("Login Error:", error);

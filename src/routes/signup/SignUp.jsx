@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+
 import { Wrapper, AuthContentContainer, ImageContainer, FormContainer, FormHeader, FormInputContainer, FormButtonContainer, AuthFooter, LoginAndSignUpLink, ErrorMessage } from "../../components/auth-form/authForm.styles";
 import Button from "../../components/button/Button";
 import { useRegisterUserMutation } from "../../reducers/slice/api/api.slice";
@@ -28,7 +30,7 @@ const SignUp = () => {
     try {
       await register({email, username, password, confirmPassword}).unwrap();
       navigate("/login");
-      // Notify User (maybe use Toast)
+      toast.success("Account created successfully 🎉");
     } catch (err) {
       console.log("Register Error:", err);
     }

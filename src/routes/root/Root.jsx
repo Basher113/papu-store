@@ -3,6 +3,10 @@ import { Outlet } from "react-router-dom"
 import { Wrapper } from "./root.styles"
 import { useState } from "react"
 import { getCartCount } from "../../utils/cart/cart"
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Root = () => {
   const [cart, setCart] = useState([
     {
@@ -26,6 +30,7 @@ const Root = () => {
       <Wrapper>
         <Outlet context={{cart: cart, setCart: setCart}}/>
       </Wrapper>
+      <ToastContainer position="top-center" theme="dark" autoClose={3000} />
     </>
   )
 }

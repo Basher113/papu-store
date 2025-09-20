@@ -7,6 +7,7 @@ import LogoIcon from "../../assets/icons/logo.png";
 
 import { useGetCurrentUserQuery } from "../../reducers/slice/api/api.slice";
 import { useLogoutUserMutation } from "../../reducers/slice/api/api.slice";
+import { toast } from "react-toastify";
 
 const Header = ({cartCount}) => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Header = ({cartCount}) => {
   const handleLogout = async () => {
     try {
       await logout().unwrap();
+      toast.success("logout successfully!")
     } catch (error) {
       console.log("Error logout", error)
     }

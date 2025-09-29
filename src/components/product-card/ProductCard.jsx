@@ -7,7 +7,7 @@ import { addProductToCart } from "../../utils/cart/cart";
 
 const ProductCard = ({product}) => {
   const navigate = useNavigate()
-  const {title, image, price, id} = product;
+  const {name, imageUrl, price, id} = product;
   const {cart, setCart} = useOutletContext();
   
   const addToCartHandler = (e) => {
@@ -20,10 +20,10 @@ const ProductCard = ({product}) => {
 
   return (
     <Wrapper onClick={() => navigate(`/product-detail/${id}`)}>
-      <ImageContainer src={image} alt={title + '. image thumbnail'} loading="lazy" width="100" height="200" />
+      <ImageContainer src={imageUrl} alt={name + '. image thumbnail'} loading="lazy" width="100" height="200" />
        
       <InfoContainer>
-        <ProductName>{truncateStr(title, 60)}</ProductName>
+        <ProductName>{truncateStr(name, 60)}</ProductName>
         <ProductPriceContainer>
           <span className="discounted-price">${price}</span>
           <span className="original-price">$10</span>

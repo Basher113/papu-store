@@ -5,16 +5,15 @@ import SearchIcon  from "../../assets/icons/search.svg";
 import CartIcon from "../../assets/icons/cart.svg";
 import LogoIcon from "../../assets/icons/logo.png";
 
-import { useGetCurrentUserQuery } from "../../reducers/slice/api/api.slice";
-import { useLogoutUserMutation } from "../../reducers/slice/api/api.slice";
+import { useGetCurrentUserQuery } from "../../reducers/slice/users/user.slice";
+import { useLogoutUserMutation } from "../../reducers/slice/users/user.slice";
 import { toast } from "react-toastify";
 
 const Header = ({cartCount}) => {
   const navigate = useNavigate();
   const {data: currentUser, error, } = useGetCurrentUserQuery();
-  const [logout, {isLoading}] = useLogoutUserMutation();
-  console.log(currentUser);
-  console.log(isLoading)
+  const [logout] = useLogoutUserMutation();
+
   const handleLogout = async () => {
     try {
       await logout().unwrap();

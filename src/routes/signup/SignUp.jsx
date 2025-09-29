@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 import { Wrapper, AuthContentContainer, ImageContainer, FormContainer, FormHeader, FormInputContainer, FormButtonContainer, AuthFooter, LoginAndSignUpLink, ErrorMessage } from "../../components/auth-form/authForm.styles";
 import Button from "../../components/button/Button";
-import { useRegisterUserMutation } from "../../reducers/slice/api/api.slice";
+import { useRegisterUserMutation } from "../../reducers/slice/users/user.slice";
 import { useNavigate } from "react-router-dom";
 
 const defaultFormFields = {

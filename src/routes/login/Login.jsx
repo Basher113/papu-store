@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLoginUserMutation } from "../../reducers/slice/api/api.slice";
+import { useLoginUserMutation } from "../../reducers/slice/users/user.slice";
 
 import urlSecrets from "../../secrets/url.secret";
 

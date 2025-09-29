@@ -27,40 +27,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['User'],
+  tagTypes: ["User", "Product"],
   keepUnusedDataFor: 60 * 5, // 5 minutes cache
-  endpoints: builder => ({
-    getCurrentUser: builder.query({
-      query: () => "users/profile",
-      providesTags: ["User"],
-    }),
-
-    registerUser: builder.mutation({
-      query: (credentials) => ({
-        url: "auth/register",
-        method: "POST",
-        body: credentials
-      })
-    }),
-
-    loginUser: builder.mutation({
-      query: (credentials) => ({
-        url: "auth/login",
-        method: "POST",
-        body: credentials
-      }),
-      invalidatesTags: ["User"],
-    }),
-
-    logoutUser: builder.mutation({
-      query: () => ({
-        url: "auth/logout",
-        method: "POST"
-      }),
-      invalidatesTags: ["User"],
-    }),
-
-  }),
+  endpoints: () => ({}),
 });
-
-export const {useGetCurrentUserQuery, useRegisterUserMutation, useLoginUserMutation, useLogoutUserMutation} = apiSlice;

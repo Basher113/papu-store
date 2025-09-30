@@ -3,7 +3,7 @@ import GamingIcon from "../../../../assets/icons/gaming.svg"
 import HeadphonesIcon from "../../../../assets/icons/headphones.svg"
 import PhoneIcon from "../../../../assets/icons/phone.svg"
 import LaptopIcon from "../../../../assets/icons/laptop.svg"
-import TvIcon from "../../../../assets/icons/tv.svg"
+
 
 import { CategoriesList, CategoryItem, Title, Wrapper } from "./categories.styles"
 import { useNavigate } from "react-router-dom"
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
  const categories = [
     {
       id: 1,
-      title: "mobile",
+      title: "phones",
       icon: PhoneIcon
     },
     {
@@ -21,22 +21,17 @@ import { useNavigate } from "react-router-dom"
     },
     {
       id: 3,
-      title: "laptop",
+      title: "computer",
       icon: LaptopIcon
     },
     {
-      id: 4,
-      title:  "audio",
+      id: 5,
+      title: "camera",
       icon: HeadphonesIcon
     },
     {
-      id: 5,
-      title: "tv",
-      icon: TvIcon
-    },
-    {
-      id: 6,
-      title: "appliances",
+      id: 4,
+      title: "accessories",
       icon: AppliancesIcon
     }
   ] 

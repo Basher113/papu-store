@@ -1,36 +1,43 @@
-import { addProductToCart } from '../../utils/cart/cart'
 import {truncateStr} from "../../utils/truncate/truncate"
-import { useOutletContext, useParams } from 'react-router-dom'
-import { useFetch } from '../../custom-hooks/useFetch'
+import { useParams } from 'react-router-dom'
 import Button, { BUTTON_TYPE_CLASSES } from '../../components/button/Button'
 import { ProductDetailContainer, ProductInfo, SkeletonProductDetailImage, SkeletonProductDetailTitle, SkeletonProductDetailPrice, Wrapper, SkeletonProductDetailDescription, SkeletonLoaderProductDetailButton } from './productDetail.styles'
 import SkeletonLoader from '../../components/skeleton-loader/SkeletonLoader'
+import { useGetProductDetailQuery } from "../../reducers/slice/products/product.slice"
 
 const ProductDetail = () => {
   const {productId} = useParams();
-  const {cart, setCart} = useOutletContext();
-  const product = useFetch(`https://fakestoreapi.in/api/products/${productId}`);
+  const {data, isLoading, error, isError} = useGetProductDetailQuery(productId)
 
-  if (product.loading) return <SkeletonLoaderProductDetail />
-  
-  const addToCartHandler = () => {
-    setCart(addProductToCart(cart, product.data.product))
-  }
-
+  console.log(data);
   return (
     <Wrapper>
-      <ProductDetailContainer>
-        <img src={product.data.product.image} alt="" height="400" width="400" />
-        <ProductInfo>
-          <div className="product-detail-title">{product.data.product.title}</div>
-          <div className="product-detail-price">${product.data.product.price}</div>
-          <div className="product-detail-description">{truncateStr(product.data.product.description, 700)}</div>
-          <div className='buttons-container'>
-            <Button buttonType={BUTTON_TYPE_CLASSES.addToCart} onClick={addToCartHandler}>Add To Cart</Button>
-            <Button>Buy Now</Button>
-          </div>
-        </ProductInfo>
-      </ProductDetailContainer>
+      {
+        isError ? (
+          <h2>{error?.data?.message || "Something went wrong"}</h2>
+        ) : isLoading ? (
+          <SkeletonLoaderProductDetail />
+        ) : data ? (
+          <ProductDetailContainer>
+            <img src={data.imageUrl} alt="" height="400" width="400" />
+            <ProductInfo>
+              <div className="product-detail-title">{data.name}</div>
+              <div className="product-detail-reviews">
+                <div className="stars">⭐⭐⭐⭐⭐</div>
+                <span className="reviews-count">(150 reviews)</span>
+              </div>
+              <div className="product-detail-price">${data.price}</div>
+              <div className="product-detail-description">{truncateStr(data.description, 700)}</div>
+              <div className='buttons-container'>
+                <Button buttonType={BUTTON_TYPE_CLASSES.addToCart}>Add To Cart</Button>
+                <Button>Buy Now</Button>
+              </div>
+            </ProductInfo>
+          </ProductDetailContainer>
+        ) : (
+          <h2>Something Went Wrong?</h2>
+        )
+      }
     </Wrapper>
   )
 }

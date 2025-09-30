@@ -1,5 +1,4 @@
 export const truncateStr = (str, maxLength) => {
-  
   if (str.length <= maxLength) {
     return str;
   }

@@ -4,16 +4,13 @@ import ProductCard, { SkeletonProductCard } from "../../components/product-card/
 
 import { ProductCarouselContainer, Wrapper, CategoryTitle, ViewAllButton, SkeletonLoaderCategoryTitle } from "./landingPage.styles"
 import { useNavigate } from "react-router-dom"
-import { useFetch } from "../../custom-hooks/useFetch"
 import Categories from "./components/categories/Categories"
+import { useGetProductsInCategoryQuery } from "../../reducers/slice/products/product.slice"
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const products = useFetch("https://fakestoreapi.com/products");
-  let popularProducts = []
-  // if (!products.loading) {
-  //   popularProducts = getPopular(products.data.products);
-  // }
+  let {data, isLoading, error} = useGetProductsInCategoryQuery("computer") // Will change later!.
+  
   
   return (
     <Wrapper>
@@ -21,12 +18,19 @@ const LandingPage = () => {
       <ProductCarouselContainer>
         <CategoryTitle>Best selling products</CategoryTitle>
         <CustomCarousel>
-          {!products.loading ? 
-            popularProducts.map((product) => <ProductCard key={product.id} product={product}/>) :
-            [0, 1, 2, 3, 4, 5].map(index => <SkeletonProductCard key={index}/>)
+          {
+            error ? (
+              <div>{error.data.message || "Something went wrong."} </div>
+            ) : isLoading ? (
+              [0, 1, 2, 3, 4, 5].map(index => <SkeletonProductCard key={index}/>)
+            ) : data ? (
+              data.map((product) => <ProductCard key={product.id} product={product}/>)
+            ) : (
+              <div>No data found</div>
+            )
           }
         </CustomCarousel>
-        <ViewAllButton onClick={() => navigate("products/all")}>View All Products</ViewAllButton>
+        {data && <ViewAllButton onClick={() => navigate("#")}>View All Products</ViewAllButton>}
       </ProductCarouselContainer>
       
       <Categories />

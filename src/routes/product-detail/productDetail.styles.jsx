@@ -25,10 +25,6 @@ export const ProductDetailContainer = styled.div`
     margin: 0 auto;
     grid-template-columns: 1fr;
     grid-template-rows: 200px 1fr;
-
-    & > img {
-      
-    }
   }
 `
 
@@ -49,6 +45,16 @@ export const ProductInfo = styled.div`
     font-size: var(--font-xs);
     border-bottom: 0.5px solid black;
     padding-bottom: 1em;
+  }
+
+  & > .product-detail-reviews {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    & > .reviews-count {
+      font-size: 14px;
+      color: grey;
+    }
   }
 
   & > .buttons-container {

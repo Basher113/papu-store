@@ -1,5 +1,5 @@
 import ProductCard, { SkeletonProductCard } from "../../components/product-card/ProductCard";
-import { useGetProductsInCategoryQuery } from "../../reducers/slice/products/product.slice";
+import { useGetProductsInCategoryInfiniteQuery } from "../../reducers/slice/products/product.slice";
 
 import {  useParams } from "react-router-dom";
 
@@ -8,24 +8,30 @@ import SkeletonLoader from "../../components/skeleton-loader/SkeletonLoader";
 
 const ProductCategory = () => {
   const {category} = useParams();
-  const {data, isLoading, isError, error} = useGetProductsInCategoryQuery(category);
-  console.log(isError, error)
+  let {data, isLoading, error, isFetchingNextPage, hasNextPage, fetchNextPage} = useGetProductsInCategoryInfiniteQuery(category) // Will change later!.
+  const allResults = data?.pages.flat() ?? [];
+  const handleLoadMore = async () => {
+    await fetchNextPage();
+  } 
   
   return (
     <Wrapper>
       {error ? (
-        <h2>{error.data.message}</h2> 
+        <h2>{error?.data?.message || "Something went wrong"}</h2> 
       ) : isLoading ? ( 
         <SkeletonLoaderProductCategory />
       ) : data ? (
         <>
           <h2>{category === "all" ? "All Products" : category}</h2>
           <ProductsContainer>
-            {data &&data.map((product) => {
-              return <ProductCard key={product.id} product={product}/>
-            })}
+            {
+              allResults.map(res => res.products.map((product) => <ProductCard key={product.id} product={product}/>))
+            }
           </ProductsContainer>
-          <ViewMoreButton>View More</ViewMoreButton>
+          {
+          hasNextPage && 
+          <ViewMoreButton onClick={handleLoadMore}>{isFetchingNextPage ? "Loading..." : "View More" }</ViewMoreButton>
+          }
         </>
       ) : (
         <h1>No Data</h1>

@@ -5,13 +5,15 @@ import ProductCard, { SkeletonProductCard } from "../../components/product-card/
 import { ProductCarouselContainer, Wrapper, CategoryTitle, ViewAllButton, SkeletonLoaderCategoryTitle } from "./landingPage.styles"
 import { useNavigate } from "react-router-dom"
 import Categories from "./components/categories/Categories"
-import { useGetProductsInCategoryQuery } from "../../reducers/slice/products/product.slice"
+import { useGetProductsInCategoryInfiniteQuery } from "../../reducers/slice/products/product.slice"
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  let {data, isLoading, error} = useGetProductsInCategoryQuery("computer") // Will change later!.
-  
-  
+  let {data, isLoading, error,} = useGetProductsInCategoryInfiniteQuery("computer") // Will change later!.
+  const allResults = data?.pages.flat() ?? [];
+  console.log(allResults);
+
+
   return (
     <Wrapper>
       <Hero />
@@ -24,13 +26,13 @@ const LandingPage = () => {
             ) : isLoading ? (
               [0, 1, 2, 3, 4, 5].map(index => <SkeletonProductCard key={index}/>)
             ) : data ? (
-              data.map((product) => <ProductCard key={product.id} product={product}/>)
+              allResults.map(res => res.products.map((product) => <ProductCard key={product.id} product={product}/>))
             ) : (
               <div>No data found</div>
             )
           }
         </CustomCarousel>
-        {data && <ViewAllButton onClick={() => navigate("#")}>View All Products</ViewAllButton>}
+        {<ViewAllButton onClick={() => navigate("#")}>View All Products</ViewAllButton>}
       </ProductCarouselContainer>
       
       <Categories />

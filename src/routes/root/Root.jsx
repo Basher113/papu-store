@@ -1,11 +1,12 @@
 import Header from "../../components/header/Header"
 import { Outlet } from "react-router-dom"
-import { Wrapper } from "./root.styles"
+import { Wrapper, OutletWrapper } from "./root.styles"
 import { useState } from "react"
 import { getCartCount } from "../../utils/cart/cart"
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../../components/footer/Footer"
 
 const Root = () => {
   const [cart, setCart] = useState([
@@ -25,13 +26,14 @@ const Root = () => {
 ])
   const cartCount = getCartCount(cart);
   return (
-    <>
+    <Wrapper>
       <Header cartCount={cartCount}/>
-      <Wrapper>
+      <OutletWrapper>
         <Outlet context={{cart: cart, setCart: setCart}}/>
-      </Wrapper>
+      </OutletWrapper>
+      <Footer />
       <ToastContainer position="top-center" theme="dark" autoClose={3000} />
-    </>
+    </Wrapper>
   )
 }
 

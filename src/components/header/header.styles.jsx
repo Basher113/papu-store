@@ -7,7 +7,7 @@ export const Wrapper = styled.header`
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 10000;
   width: 100vw;
   min-width: 1440;
   max-width: 1920px;

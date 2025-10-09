@@ -1,15 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Wrapper, HeaderRight, Logo, MainNav, SearchGroup, SearchInput, CartIconContainer } from "./header.styles";
+import { Wrapper, HeaderRight, Logo, MainNav, SearchGroup, SearchInput} from "./header.styles";
 import HeartIcon from "../../assets/icons/heart.svg";
 import SearchIcon  from "../../assets/icons/search.svg";
-import CartIcon from "../../assets/icons/cart.svg";
 import LogoIcon from "../../assets/icons/logo.png";
 
 import { useGetCurrentUserQuery } from "../../reducers/slice/users/user.slice";
 import { useLogoutUserMutation } from "../../reducers/slice/users/user.slice";
 import { toast } from "react-toastify";
 
-const Header = ({cartCount}) => {
+import CartIcon from "../cart-icon/CartIcon";
+
+const Header = () => {
   const navigate = useNavigate();
   const {data: currentUser, error, } = useGetCurrentUserQuery();
   const [logout] = useLogoutUserMutation();
@@ -22,6 +23,7 @@ const Header = ({cartCount}) => {
       console.log("Error logout", error)
     }
   }
+
   return (
     <Wrapper>
       <Logo onClick={() => navigate("/")}>
@@ -46,10 +48,7 @@ const Header = ({cartCount}) => {
           <img src={SearchIcon} alt="search icon" height="24" width="24" />
         </SearchGroup>
         <img src={HeartIcon} alt="heart icon" height="24" width="24"/>
-        {currentUser && !error && <CartIconContainer onClick={() => navigate("cart")}>
-          <img src={CartIcon} alt="cart icon" height="24" width="24"/>
-          <span>{cartCount}</span>
-        </CartIconContainer>}
+        <CartIcon />
       </HeaderRight>
     </Wrapper>
   )

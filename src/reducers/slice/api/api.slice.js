@@ -27,7 +27,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["User", "Product", "Category"],
+  tagTypes: ["User", "Product", "Category", "Cart"],
   keepUnusedDataFor: 60 * 5, // 5 minutes cache
   endpoints: () => ({}),
 });

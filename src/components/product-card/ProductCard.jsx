@@ -2,21 +2,28 @@ import { Wrapper, ImageContainer, InfoContainer, ProductName, ProductPriceContai
 import { truncateStr } from "../../utils/truncate/truncate";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/Button";
 import SkeletonLoader from "../skeleton-loader/SkeletonLoader";
-import { useNavigate, useOutletContext } from "react-router-dom";
-import { addProductToCart } from "../../utils/cart/cart";
+import { useNavigate } from "react-router-dom";
+import { useAddProductToCartMutation } from "../../reducers/slice/carts/cart.slice";
+import { toast } from "react-toastify";
+
 
 const ProductCard = ({product}) => {
   const navigate = useNavigate()
   const {name, imageUrl, price, id} = product;
-  const {cart, setCart} = useOutletContext();
+  const [addProductToCart, { isLoading }] = useAddProductToCartMutation()
   
-  const addToCartHandler = (e) => {
+  const addToCartHandler = async (e) => {
     e.stopPropagation(); // for propagete or don't call the wrapper onClick
-    setCart(addProductToCart(cart, product))
+    try {
+      const result = await addProductToCart({productId: id, quantity: 1}).unwrap();
+      console.log(result);
+      toast.success(result.message)
+  
+    } catch (error) {
+      toast.error(error?.data?.message || "Something went wrong. Please try again later.")
+      console.log("Add to cart error:", error);
+    }
   }
-
-
-  console.log(cart);
 
   return (
     <Wrapper onClick={() => navigate(`/product-detail/${id}`)}>
@@ -28,7 +35,7 @@ const ProductCard = ({product}) => {
           <span className="discounted-price">${price}</span>
           <span className="original-price">$10</span>
         </ProductPriceContainer>
-        <Button onClick={(e) => addToCartHandler(e)} buttonType={BUTTON_TYPE_CLASSES.addToCart}>Add To Cart</Button>
+        <Button onClick={(e) => addToCartHandler(e)} buttonType={BUTTON_TYPE_CLASSES.addToCart} disable={isLoading}>Add To Cart</Button>
       </InfoContainer>
 
     </Wrapper>

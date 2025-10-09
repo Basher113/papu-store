@@ -67,3 +67,11 @@ export const ReturnButton = styled(Button)`
   width: 250px;
   padding: 0.8em 0;
 `
+
+export const CartEmpty = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+  gap: 1rem;
+`

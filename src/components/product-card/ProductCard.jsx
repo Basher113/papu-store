@@ -16,9 +16,8 @@ const ProductCard = ({product}) => {
     e.stopPropagation(); // for propagete or don't call the wrapper onClick
     try {
       const result = await addProductToCart({productId: id, quantity: 1}).unwrap();
-      console.log(result);
+      
       toast.success(result.message)
-  
     } catch (error) {
       toast.error(error?.data?.message || "Something went wrong. Please try again later.")
       console.log("Add to cart error:", error);

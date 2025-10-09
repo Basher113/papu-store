@@ -6,7 +6,10 @@ const cartApiSlice = apiSlice.injectEndpoints({
     getCart: builder.query({
       query: () => "/carts",
       providesTags: (result, err, arg) => // eslint-disable-line
-        result ? [...result.map(cartItem => ({type: "Cart", id: cartItem.id}), {type: "Cart", id: "List"})] : [{type:"Cart", id: "List"}]
+        {
+          console.log(result);
+          return result ? [...result.map(cartItem => ({type: "Cart", id: cartItem.id})),  {type: "Cart", id: "LIST"}] : [{type:"Cart", id: "LIST"}]
+        }
     }),
 
     addProductToCart: builder.mutation({
@@ -15,8 +18,7 @@ const cartApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body
       }),
-      invalidatesTags: (result, err, arg) => // eslint-disable-line
-        result && result.cartItem ? [{type: "Cart", id: result.cartItem.id}] : [{type: "Cart", id: "List"}]
+      invalidatesTags: [{type: "Cart", id: "LIST"}]
     })
     
   })

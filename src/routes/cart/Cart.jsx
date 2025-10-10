@@ -1,8 +1,8 @@
-import { CartEmpty, CartHeader, CartProduct, CartProductList, ProductRow, ReturnButton, Wrapper } from "./cart.styles"
+import { CartEmpty, CartHeader, CartProductList,  ReturnButton, Wrapper } from "./cart.styles"
 import { useNavigate } from "react-router-dom";
-import { truncateStr } from "../../utils/truncate/truncate";
 import { BUTTON_TYPE_CLASSES } from "../../components/button/Button";
 import { useGetCartQuery } from "../../reducers/slice/carts/cart.slice";
+import CartProduct from "./components/CartProduct";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -11,11 +11,8 @@ const Cart = () => {
   const handleGoToShop = () => {
     navigate("/")
   }
-  console.log(data);
-
-
+  
   return (
-   
     <Wrapper>
       {
         error ? (
@@ -32,17 +29,7 @@ const Cart = () => {
             </CartHeader>
             <CartProductList>
               {data.map(cartItem => (
-                <CartProduct key={cartItem.id}>
-                  <ProductRow onClick={() => navigate(`/product-detail/${cartItem.product.id}`)}>
-                    <img src={cartItem.product.imageUrl} />
-                    <span>{truncateStr(cartItem.product.name, 15)}</span>
-                  </ProductRow>
-                  <div className="price">${cartItem.product.price}</div>
-                  <div className="quantity">
-                    <input type="number" name="quantity" defaultValue={cartItem.quantity} min="1" max="10" />
-                  </div>
-                  <div className="subtotal">${cartItem.quantity * cartItem.product.price}</div>
-                </CartProduct >
+               <CartProduct key={cartItem.id} cartItem={cartItem}/>
               ))}
             </CartProductList>
             <ReturnButton buttonType={BUTTON_TYPE_CLASSES.helper} onClick={handleGoToShop}>Return To Shop</ReturnButton>

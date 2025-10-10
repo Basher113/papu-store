@@ -19,9 +19,18 @@ const cartApiSlice = apiSlice.injectEndpoints({
         body
       }),
       invalidatesTags: [{type: "Cart", id: "LIST"}]
+    }),
+
+    updateCartItem: builder.mutation({
+      query: ({cartItemId, quantity }) => ({
+        url: `/carts/cartItems/${cartItemId}`,
+        method: "PATCH",
+        body: {quantity}
+      }),
+      invalidatesTags: (result, err, args) => [{type: "Cart", id: args.cartItemId}]
     })
     
   })
 });
 
-export const {useGetCartQuery, useAddProductToCartMutation} = cartApiSlice;
+export const {useGetCartQuery, useAddProductToCartMutation, useUpdateCartItemMutation} = cartApiSlice;

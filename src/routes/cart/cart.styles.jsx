@@ -28,40 +28,8 @@ export const CartProductList = styled.div`
   gap: 1rem;
 `
 
-export const CartProduct = styled(CartHeader)`
-  padding: 2rem;
-  & > div {
-    flex: 1;
-    text-align: center;
-  }
-
-  input[type=number] {
-    width: 60px;
-    padding: .5rem;
-    text-align: center;
-  }
-`
-
-export const ProductRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  justify-content: center;
-  cursor: pointer;
-
-  &:hover {
-    
-    & > span {
-      text-decoration: underline;
-    }
-  }
 
 
-  & > img {
-    width: 50px;
-    height: auto;
-  }
-`
 
 export const ReturnButton = styled(Button)`
   width: 250px;

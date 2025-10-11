@@ -5,7 +5,7 @@ const cartApiSlice = apiSlice.injectEndpoints({
 
     getCart: builder.query({
       query: () => "/carts",
-      providesTags: (result, err, arg) => // eslint-disable-line
+      providesTags: (result, err, args) => // eslint-disable-line
         {
           console.log(result);
           return result ? [...result.map(cartItem => ({type: "Cart", id: cartItem.id})),  {type: "Cart", id: "LIST"}] : [{type:"Cart", id: "LIST"}]
@@ -28,9 +28,17 @@ const cartApiSlice = apiSlice.injectEndpoints({
         body: {quantity}
       }),
       invalidatesTags: (result, err, args) => [{type: "Cart", id: args.cartItemId}]
+    }),
+
+    deleteCartItem: builder.mutation({
+      query: (cartItemId) => ({
+        url: `/carts/cartItems/${cartItemId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, err, cartItemId) => result ? [{type: "Cart", id: cartItemId}] : [{type: "Cart", id: "LIST"}]
     })
     
   })
 });
 
-export const {useGetCartQuery, useAddProductToCartMutation, useUpdateCartItemMutation} = cartApiSlice;
+export const {useGetCartQuery, useAddProductToCartMutation, useUpdateCartItemMutation, useDeleteCartItemMutation} = cartApiSlice;

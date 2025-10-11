@@ -1,26 +1,47 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: white;
-
   padding: 2rem;
-  
+  font-size: var(--font-xs);
+
   & > div {
     flex: 1;
     text-align: center;
   }
 
-  input[type=number] {
-    width: 40px;
-    padding: .4rem;
-    text-align: center;
+  & > .delete-icon {
+    cursor: pointer;
+    transition: transform 0.8s;
+
+    &:hover {
+      transform: rotate(0.3turn);
+    }
   }
 
-  font-size: var(--font-xs);
+ 
+
+  & > .quantity {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & > input[type=number] {
+      width: 40px;
+      padding: .4rem;
+      text-align: center;
+    }
+
+    & > .stock {
+      color: red;
+    }
+  }
+
+  
+
 `
 
 export const ProductRow = styled.div`

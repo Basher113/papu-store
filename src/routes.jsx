@@ -5,6 +5,7 @@ import ProductDetail from "./routes/product-detail/ProductDetail";
 import Login from "./routes/login/Login";
 import SignUp from "./routes/signup/SignUp";
 import Root from "./routes/root/Root";
+import AuthenticatedRoutes from "./routes/authenticated-routes/AuthenticatedRoutes";
 
 export const routes = [
   {
@@ -15,6 +16,18 @@ export const routes = [
         index: true,
         element: <LandingPage />
       },
+
+      // Authenticated Routes
+      {
+        element: <AuthenticatedRoutes />,
+        children: [
+          {
+          path: "cart",
+          element: <Cart />
+        },
+        ]
+      },
+
       {
         path: "products/:category",
         element: <ProductCategory />
@@ -24,10 +37,6 @@ export const routes = [
         element: <ProductDetail />
       },
       
-      {
-        path: "cart",
-        element: <Cart />
-      },
 
       {
         path: "login",

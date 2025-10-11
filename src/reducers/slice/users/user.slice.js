@@ -21,7 +21,7 @@ const userApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: credentials
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User", "Cart"],
     }),
 
     logoutUser: builder.mutation({
@@ -29,7 +29,7 @@ const userApiSlice = apiSlice.injectEndpoints({
         url: "auth/logout",
         method: "POST"
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User", "Cart"],
     }),
   })
 })

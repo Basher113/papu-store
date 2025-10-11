@@ -48,7 +48,7 @@ const Header = () => {
           <img src={SearchIcon} alt="search icon" height="24" width="24" />
         </SearchGroup>
         <img src={HeartIcon} alt="heart icon" height="24" width="24"/>
-        <CartIcon />
+        {currentUser && <CartIcon />}
       </HeaderRight>
     </Wrapper>
   )

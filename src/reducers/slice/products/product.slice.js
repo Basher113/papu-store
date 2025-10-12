@@ -33,7 +33,14 @@ const productApiSlice = apiSlice.injectEndpoints({
         getNextPageParam: (lastPage) => lastPage.cursorId ? {cursorId: lastPage.cursorId, limit: 10} : undefined,
       },
     }),
-  })
+
+    getCategories: builder.query({
+      query: () => "/categories",
+      providesTags: [{type: "Category", id: "LIST"}],
+    }),
+  }),
+
+
 });
 
-export const {useGetAllProductsQuery, useGetProductDetailQuery, useGetProductsInCategoryInfiniteQuery} = productApiSlice;
+export const {useGetAllProductsQuery, useGetProductDetailQuery, useGetProductsInCategoryInfiniteQuery, useGetCategoriesQuery} = productApiSlice;

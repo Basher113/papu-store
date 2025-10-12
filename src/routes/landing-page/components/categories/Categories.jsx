@@ -7,45 +7,23 @@ import LaptopIcon from "../../../../assets/icons/laptop.svg"
 
 import { CategoriesList, CategoryItem, Title, Wrapper } from "./categories.styles"
 import { useNavigate } from "react-router-dom"
+import { useGetCategoriesQuery } from "../../../../reducers/slice/products/product.slice"
 
- const categories = [
-    {
-      id: 1,
-      title: "phones",
-      icon: PhoneIcon
-    },
-    {
-      id: 2,
-      title: "gaming",
-      icon: GamingIcon
-    },
-    {
-      id: 3,
-      title: "computer",
-      icon: LaptopIcon
-    },
-    {
-      id: 5,
-      title: "camera",
-      icon: HeadphonesIcon
-    },
-    {
-      id: 4,
-      title: "accessories",
-      icon: AppliancesIcon
-    }
-  ] 
+ 
 
 const Categories = () => {
   const navigate = useNavigate();
+  const {data: categories, isLoading,} = useGetCategoriesQuery()
+  console.log
+  if (isLoading) return;
   return (
     <Wrapper>
       <Title>Browse By Category</Title>
       <CategoriesList>
-        {categories.map(category => (
-          <CategoryItem key={category.id} onClick={() => navigate(`products/${category.title}`)}>
-            <img src={category.icon} alt="phone icon" height="30" width="30" loading="lazy"/>
-            <div>{category.title}</div>
+        {categories && categories.map(category => (
+          <CategoryItem key={category.id} onClick={() => navigate(`products/${category.name}`)}>
+            <img src={category.iconUrl} alt={category.name + " icon"} height="30" width="30" loading="lazy"/>
+            <div>{category.name}</div>
           </CategoryItem>
         ))}
         

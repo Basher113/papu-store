@@ -47,21 +47,31 @@ export const FormInputContainer = styled.div`
   flex-direction: column;
   gap: 1rem;  
 
-  & > input {
-    border: none;
-    border-bottom: 1px solid gray;
-    background: none;
-    font-size: 1rem;
-    padding: 1rem 1rem 0.5rem 0.3rem;
+  
+  & > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
 
-    &:focus {
-      outline: 2px solid #1273c2ff;
-      border-radius: 5px;
-    }
+    & > input {
+      border: none;
+      width: 100%;
+      background: none;
+      font-size: 1rem;
+      padding: 1rem 1rem 0.5rem 0.3rem;
+      border-bottom: 1px solid gray;
+      &:focus {
+        outline: 2px solid #1273c2ff;
+        border-radius: 5px;
 
-    &::placeholder {
+      &::placeholder {
       font-size: 0.8rem;
     }
+
+    
+  }
+
   }
 `
 

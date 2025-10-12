@@ -36,7 +36,6 @@ const SignUp = () => {
     }
   }
 
-
   return (
     <Wrapper>
       <AuthContentContainer>
@@ -46,16 +45,28 @@ const SignUp = () => {
             <div>Create an account</div>
             <p>Enter your details below</p>
           </FormHeader>
-          {isError && 
+          {isError && error?.message &&
             (<ErrorMessage>
-              {error?.data?.message || "Something went wrong. Please try again."}
+              {error.message}
             </ErrorMessage>)
             }
           <FormInputContainer>
-            <input onChange={handleChange} type="text" placeholder="Email address" name="email" value={email}/>
-            <input onChange={handleChange} type="text" placeholder="username" name="username" value={username} />
-            <input onChange={handleChange} type="password" placeholder="Password" name="password" value={password}/>
-            <input onChange={handleChange} type="password" placeholder="Confirm Password" name="confirmPassword" value={confirmPassword}/>
+            <div>
+              <input onChange={handleChange} type="text" placeholder="Email address" name="email" value={email}/>
+              {error?.data?.errors?.email && <ErrorMessage>{error.data.errors.email[0]}</ErrorMessage>}
+            </div>
+            <div>
+              <input onChange={handleChange} type="text" placeholder="username" name="username" value={username} />
+              {error?.data?.errors?.username && <ErrorMessage>{error.data.errors.username[0]}</ErrorMessage>}
+            </div>
+            <div>
+              <input onChange={handleChange} type="password" placeholder="Password" name="password" value={password}/>
+              {error?.data?.errors?.password && <ErrorMessage>{error.data.errors.password[0]}</ErrorMessage>}
+            </div>
+            <div>
+              <input onChange={handleChange} type="password" placeholder="Confirm Password" name="confirmPassword" value={confirmPassword}/>
+              {error?.data?.errors?.confirmPassword && <ErrorMessage>{error.data.errors.confirmPassword[0]}</ErrorMessage>}
+            </div>
           </FormInputContainer>
           <FormButtonContainer>
             <Button buttonType="base" type="submit" disabled={isLoading}>Create Account</Button>

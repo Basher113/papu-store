@@ -54,8 +54,12 @@ const Login = () => {
             </ErrorMessage>)
           }
           <FormInputContainer>
-            <input onChange={handleChange} type="text" placeholder="Email" name="email" value={email} />
-            <input onChange={handleChange} type="password" placeholder="Password" name="password" value={password} />
+            <div>
+               <input onChange={handleChange} type="text" placeholder="Email" name="email" value={email} />
+            </div>
+            <div>
+               <input onChange={handleChange} type="password" placeholder="Password" name="password" value={password} />
+            </div>
             <ForgetPasswordLink>Forget Password?</ForgetPasswordLink>
           </FormInputContainer>
           <FormButtonContainer>

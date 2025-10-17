@@ -2,7 +2,8 @@ import { CartEmpty, CartHeader, CartProductList,  ReturnButton, Wrapper } from "
 import { useNavigate } from "react-router-dom";
 import { BUTTON_TYPE_CLASSES } from "../../components/button/Button";
 import { useGetCartQuery } from "../../reducers/slice/carts/cart.slice";
-import CartProduct from "./components/CartProduct";
+import CartProduct from "./components/cart-product/CartProduct";
+import PaymentSummary from "./components/payment-summary/PaymentSummary";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const Cart = () => {
               ))}
             </CartProductList>
             <ReturnButton buttonType={BUTTON_TYPE_CLASSES.helper} onClick={handleGoToShop}>Return To Shop</ReturnButton>
+            <PaymentSummary cartItems={data}/>
           </>
         ) : (
           <CartEmpty>

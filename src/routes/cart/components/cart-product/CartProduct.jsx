@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { truncateStr } from '../../../utils/truncate/truncate';
+import { truncateStr } from '../../../../utils/truncate/truncate';
 import { Wrapper, ProductRow} from './cartProduct.styles';
-import { useDeleteCartItemMutation, useUpdateCartItemMutation } from '../../../reducers/slice/carts/cart.slice';
-import DeleteIcon from "../../../assets/icons/delete.svg";
+import { useDeleteCartItemMutation, useUpdateCartItemMutation } from '../../../../reducers/slice/carts/cart.slice';
+import DeleteIcon from "../../../../assets/icons/delete.svg";
 
 const CartProduct = ({cartItem}) => {
   const navigate = useNavigate();

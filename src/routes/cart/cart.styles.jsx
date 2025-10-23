@@ -16,7 +16,7 @@ export const CartHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   & > span {
     flex: 1;
     text-align: center;

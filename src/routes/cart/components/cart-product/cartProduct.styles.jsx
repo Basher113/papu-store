@@ -7,6 +7,8 @@ export const Wrapper = styled.div`
   background-color: white;
   padding: 2rem;
   font-size: var(--font-xs);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
 
   & > div {
     flex: 1;
@@ -40,7 +42,7 @@ export const Wrapper = styled.div`
     }
   }
 
-  
+
 
 `
 
@@ -50,6 +52,7 @@ export const ProductRow = styled.div`
   gap: 0.75rem;
   justify-content: center;
   cursor: pointer;
+  font-size: var(--font-xs);
   
   & > .product-name {
     &:hover { 

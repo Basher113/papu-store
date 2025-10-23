@@ -1,30 +1,25 @@
+import { useNavigate } from 'react-router-dom';
 import { Content, ProcessButton, Total, Wrapper } from './paymentSummary.styles'
+import PaymentInfo from '../../../../components/payment-info/PaymentInfo';
 
 const PaymentSummary = ({cartItems}) => {
+  const navigate = useNavigate();
+
   const subTotal = cartItems.reduce((currentTotal, currentItem) => {
     return currentTotal + currentItem.quantity * currentItem.product.price;
-  }, 0)
+  }, 0);
+  const products = cartItems.map(cartItem => ({...cartItem.product, quantity: cartItem.quantity}));
+
+  const handleProcessCheckout = () => navigate("/checkout", {state: {products: products, subTotal: subTotal}});
+
   return (
     <Wrapper>
       <Content href="">
         <div className='header'>Cart Total</div>
-        <Total>
-          <div>
-            <span>Subtotal:</span>
-            <span>${subTotal.toFixed(2)}</span>
-          </div>
 
-          <div>
-            <span>Shipping:</span>
-            <span>Free</span>
-          </div>
-
-          <div>
-            <span>Total:</span>
-            <span>${subTotal.toFixed(2)}</span>
-          </div>
-        </Total>
-        <ProcessButton>Process to Checkout</ProcessButton>
+        <PaymentInfo subTotal={subTotal}/>
+        <ProcessButton onClick={handleProcessCheckout}>Process to Checkout</ProcessButton>
+        
       </Content>
     </Wrapper>
   )

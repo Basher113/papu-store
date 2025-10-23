@@ -61,10 +61,10 @@ export const FormInputContainer = styled.div`
       font-size: 1rem;
       padding: 1rem 1rem 0.5rem 0.3rem;
       border-bottom: 1px solid gray;
-      &:focus {
-        outline: 2px solid #1273c2ff;
-        border-radius: 5px;
-
+        &:focus {
+          outline: 2px solid #1273c2ff;
+          border-radius: 5px;
+        }
       &::placeholder {
       font-size: 0.8rem;
     }

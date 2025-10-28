@@ -6,13 +6,13 @@ export const Wrapper = styled.div`
   padding: 5rem;
 `
 
-export const Content = styled.div`
+export const BillingDetailsForm = styled.form`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
 `
 
-export const BillingDetailsForm = styled.form`
+export const BillingDetailsInputs = styled.div`
   flex: 0.5;
   display: grid;
 `
@@ -49,9 +49,14 @@ export const InputGroup = styled.div`
 
 
     & > label {
-    font-size: var(--font-xs);
-    color: black;
-  }
+      font-size: var(--font-xs);
+      color: black;
+      
+    }
+
+    & span {
+      color: rgba(0, 0, 0, 0.66)    
+    }
   }
 
   

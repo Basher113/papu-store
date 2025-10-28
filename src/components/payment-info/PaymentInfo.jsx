@@ -1,7 +1,7 @@
 import { Wrapper } from "./paymentInfo.styles"
 
 const PaymentInfo = ({subTotal}) => {
-  const shippingFee = subTotal >= 1000 ? 0 : 50;
+  const shippingFee = 0; // Change this later ofcourse
   const total = subTotal + shippingFee;
   console.log(subTotal)
   return (

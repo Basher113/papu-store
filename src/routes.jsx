@@ -7,6 +7,7 @@ import SignUp from "./routes/signup/SignUp";
 import Root from "./routes/root/Root";
 import AuthenticatedRoutes from "./routes/authenticated-routes/AuthenticatedRoutes";
 import Checkout from "./routes/checkout/Checkout";
+import OrderConfirmation from "./routes/order-confirmation/OrderConfirmation";
 
 export const routes = [
   {
@@ -32,6 +33,10 @@ export const routes = [
       {
         path: "checkout/",
         element: <Checkout />
+      },
+      {
+        path: "checkout/order-confirmation/",
+        element: <OrderConfirmation />
       },
 
       {

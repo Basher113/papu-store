@@ -4,7 +4,7 @@ import urlSecrets from '../../../secrets/url.secret';
 
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: urlSecrets.serverUrl,
+  baseUrl: urlSecrets.ngrokTestServerUrl,
   credentials: "include",
 });
 

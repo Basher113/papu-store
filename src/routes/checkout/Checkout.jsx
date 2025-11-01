@@ -46,9 +46,10 @@ const Checkout = () => {
     } else {
       try {
         const response = await paymongoGateway({products, total: subTotal, paymentMethod, addressData: formFields}).unwrap()
-        toast.success("Succesful Order.");
-        console.log(response)
+        
+        sessionStorage.setItem("sessionId", response.sessionId);
         window.location.href = response.checkoutUrl;
+        
       } catch (err) {
         console.log("cash on delivery error:", err);
       }

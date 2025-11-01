@@ -19,8 +19,16 @@ const orderApiSlice = apiSlice.injectEndpoints({
       })
     }),
 
+    getOrderBySessionId: builder.query({
+      query: (sessionId) => `"orders/session/${sessionId}`,
+    }),
+
+    getOrderByOrderId: builder.query({
+      query: (orderId) => `"orders/${orderId}`,
+    }),
+
    
   })
 })
 
-export const {useCreateOrderCashOnDeliveryMutation, useCreateOrderPayOnPaymongoMutation} = orderApiSlice;
+export const {useCreateOrderCashOnDeliveryMutation, useCreateOrderPayOnPaymongoMutation, useGetOrderByOrderIdQuery, useGetOrderBySessionIdQuery} = orderApiSlice;

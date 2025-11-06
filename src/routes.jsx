@@ -8,7 +8,7 @@ import Root from "./routes/root/Root";
 import AuthenticatedRoutes from "./routes/authenticated-routes/AuthenticatedRoutes";
 import Checkout from "./routes/checkout/Checkout";
 import OrderConfirmation from "./routes/order-confirmation/OrderConfirmation";
-
+import MyAccount from "./routes/my-account/MyAccount";
 export const routes = [
   {
     path: "/",
@@ -26,7 +26,12 @@ export const routes = [
           {
           path: "cart",
           element: <Cart />
-        },
+          },
+
+          {
+            path: "user/",
+            element: <MyAccount />,
+          },
         ]
       },
 
@@ -34,6 +39,7 @@ export const routes = [
         path: "checkout/",
         element: <Checkout />
       },
+      
       {
         path: "checkout/order-confirmation/",
         element: <OrderConfirmation />

@@ -22,7 +22,7 @@ const LandingPage = () => {
         <CustomCarousel>
           {
             error ? (
-              <div>{error.data.message || "Something went wrong."} </div>
+              <div>{error?.data?.message || "Something went wrong."} </div>
             ) : isLoading ? (
               [0, 1, 2, 3, 4, 5].map(index => <SkeletonProductCard key={index}/>)
             ) : data ? (

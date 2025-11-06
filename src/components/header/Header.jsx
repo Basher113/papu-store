@@ -5,25 +5,15 @@ import SearchIcon  from "../../assets/icons/search.svg";
 import LogoIcon from "../../assets/icons/logo.png";
 
 import { useGetCurrentUserQuery } from "../../reducers/slice/users/user.slice";
-import { useLogoutUserMutation } from "../../reducers/slice/users/user.slice";
-import { toast } from "react-toastify";
 
-import CartIcon from "../cart-icon/CartIcon";
+import CartIcon from "./subComponents/cart-icon/CartIcon";
+import UserProfile from "./subComponents/user-profile/UserProfile";
 
 const Header = () => {
   const navigate = useNavigate();
   const {data: currentUser, error, } = useGetCurrentUserQuery();
-  const [logout] = useLogoutUserMutation();
-
-  const handleLogout = async () => {
-    try {
-      await logout().unwrap();
-      toast.success("logout successfully!")
-    } catch (error) {
-      console.log("Error logout", error)
-    }
-  }
-
+  console.log(currentUser, error, "Hello"
+  )
   return (
     <Wrapper>
       <Logo onClick={() => navigate("/")}>
@@ -37,7 +27,7 @@ const Header = () => {
           <li><Link>About</Link></li>
           <li><Link>Categories</Link></li>
           {currentUser && !error
-          ?  <li><Link onClick={handleLogout}>Logout</Link></li>
+          ?  <></>
           :  <li><Link to="/login">Login</Link></li>
           }
         </ul>
@@ -49,6 +39,7 @@ const Header = () => {
         </SearchGroup>
         <img src={HeartIcon} alt="heart icon" height="24" width="24"/>
         {currentUser && <CartIcon />}
+        {currentUser && <UserProfile />}
       </HeaderRight>
     </Wrapper>
   )

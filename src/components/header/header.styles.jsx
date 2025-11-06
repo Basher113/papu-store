@@ -55,7 +55,8 @@ export const HeaderRight = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  & > img {
+
+  &  img {
     cursor: pointer;
     &:hover {
       transform: scale(1.1)

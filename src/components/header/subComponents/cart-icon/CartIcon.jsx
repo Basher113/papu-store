@@ -1,6 +1,6 @@
 import { Wrapper } from "./cartIcon.styles";
-import icon from "../../assets/icons/cart.svg";
-import { useGetCartQuery } from "../../reducers/slice/carts/cart.slice";
+import icon from "../../../../assets/icons/cart.svg";
+import { useGetCartQuery } from "../../../../reducers/slice/carts/cart.slice";
 import { useNavigate } from "react-router-dom";
 const CartIcon = () => {
   const {data, isLoading,} = useGetCartQuery();

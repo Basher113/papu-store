@@ -2,9 +2,12 @@ import { useGetCurrentUserQuery } from "../../../../reducers/slice/users/user.sl
 import { ContentSection, SectionTitle, Divider } from "../../shared.styles";
 import { ProfileCard, ProfileHeader, Avatar, ProfileInfo, UserName, UserEmail, EditButton, InfoGrid, InfoItem, InfoLabel, InfoValue } from "./profile.styles";
 import Spinner from "../../../../components/spinner/Spinner"
+import { useState } from "react";
+import EditProfile from "./components/edit-profile/EditProfile";
+import Modal from "../../../../components/modal/Modal";
 const Profile = () => {
   const {data: currentUser, isLoading, error, } = useGetCurrentUserQuery();
-
+  const [showEditProfile, setShowEditProfile] = useState(false);
   if (isLoading) return <Spinner />
   if (error) return <div>Something Went Wrong</div>
   return (
@@ -12,12 +15,12 @@ const Profile = () => {
     <SectionTitle>My Profile</SectionTitle>
     <ProfileCard>
       <ProfileHeader>
-        <Avatar src={currentUser.avatar} alt={currentUser.username} />
+        <Avatar src="https://i.pinimg.com/1200x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg" alt={currentUser.username} />
         <ProfileInfo>
           <UserName>{currentUser.username}</UserName>
           <UserEmail>{currentUser.email}</UserEmail>
         </ProfileInfo>
-        <EditButton>Edit Profile</EditButton>
+        <EditButton onClick={() => setShowEditProfile(true)}>Edit Profile</EditButton>
       </ProfileHeader>
       <Divider />
       <InfoGrid>
@@ -43,6 +46,10 @@ const Profile = () => {
         </InfoItem>
       </InfoGrid>
     </ProfileCard>
+    {showEditProfile && <Modal onClose={() => setShowEditProfile(false)} title="Edit Profile">
+        <EditProfile userData={currentUser} onClose={() => setShowEditProfile(false)}/>
+    </Modal>}
+    
   </ContentSection>
   )
 }

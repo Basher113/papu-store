@@ -9,121 +9,36 @@ import { Container,
   InfoItem, InfoValue, InfoLabel, EmptyIcon, EmptyState, EmptySubtext, EmptyText
    } from './purchase.styles';
 
+import { useGetOrdersInfiniteQuery } from '../../../../reducers/slice/order/order.slice';
+import Button from '../../../../components/button/Button';
+import Spinner from "../../../../components/spinner/Spinner"
+
 const Purchase = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  let {
+      data,
+      isLoading,
+      error,
+      isFetchingNextPage,
+      hasNextPage,
+      fetchNextPage } = useGetOrdersInfiniteQuery({status: activeTab, search: searchQuery})
 
   // Mock orders data with different statuses
-  const allOrders = [
-    { 
-      id: '12345', 
-      date: '2024-11-05', 
-      status: 'delivered', 
-      total: '₱1,299', 
-      items: [
-        { name: 'Wireless Headphones', quantity: 1, price: '₱1,299', image: 'https://via.placeholder.com/80' }
-      ],
-      trackingNumber: 'TRK123456789',
-      paymentMethod: 'Credit Card'
-    },
-    { 
-      id: '12344', 
-      date: '2024-11-03', 
-      status: 'to_receive', 
-      total: '₱2,499', 
-      items: [
-        { name: 'Smart Watch', quantity: 1, price: '₱2,499', image: 'https://via.placeholder.com/80' }
-      ],
-      trackingNumber: 'TRK123456788',
-      estimatedDelivery: '2024-11-08',
-      paymentMethod: 'GCash'
-    },
-    { 
-      id: '12343', 
-      date: '2024-11-02', 
-      status: 'to_ship', 
-      total: '₱899', 
-      items: [
-        { name: 'Phone Case', quantity: 2, price: '₱449', image: 'https://via.placeholder.com/80' },
-        { name: 'Screen Protector', quantity: 1, price: '₱450', image: 'https://via.placeholder.com/80' }
-      ],
-      paymentMethod: 'COD'
-    },
-    { 
-      id: '12342', 
-      date: '2024-11-01', 
-      status: 'to_pay', 
-      total: '₱3,599', 
-      items: [
-        { name: 'Laptop Stand', quantity: 1, price: '₱1,299', image: 'https://via.placeholder.com/80' },
-        { name: 'Mechanical Keyboard', quantity: 1, price: '₱2,300', image: 'https://via.placeholder.com/80' }
-      ],
-      paymentDeadline: '2024-11-03',
-      paymentMethod: 'Bank Transfer'
-    },
-    { 
-      id: '12341', 
-      date: '2024-10-28', 
-      status: 'cancelled', 
-      total: '₱1,599', 
-      items: [
-        { name: 'USB Cable', quantity: 3, price: '₱533', image: 'https://via.placeholder.com/80' }
-      ],
-      cancelReason: 'Changed my mind',
-      paymentMethod: 'GCash'
-    },
-    { 
-      id: '12340', 
-      date: '2024-10-25', 
-      status: 'delivered', 
-      total: '₱4,299', 
-      items: [
-        { name: 'Gaming Mouse', quantity: 1, price: '₱2,499', image: 'https://via.placeholder.com/80' },
-        { name: 'Mouse Pad', quantity: 1, price: '₱1,800', image: 'https://via.placeholder.com/80' }
-      ],
-      trackingNumber: 'TRK123456787',
-      paymentMethod: 'Credit Card'
-    },
-  ];
+  const handleLoadMore = async () => {
+    await fetchNextPage();
+  }
 
-  const getFilteredOrders = () => {
-    let filtered = allOrders;
-
-    // Filter by tab
-    if (activeTab !== 'all') {
-      filtered = filtered.filter(order => order.status === activeTab);
-    }
-
-    // Filter by search query
-    if (searchQuery) {
-      filtered = filtered.filter(order => 
-        order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        order.items.some(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
-      );
-    }
-
-    return filtered;
-  };
-
-  const getOrderCount = (status) => {
-    if (status === 'all') return allOrders.length;
-    return allOrders.filter(order => order.status === status).length;
-  };
 
   const getStatusDisplay = (status) => {
     const statusMap = {
-      to_pay: { text: 'To Pay', color: '#FF6B35' },
-      to_ship: { text: 'To Ship', color: '#F7931E' },
-      to_receive: { text: 'To Receive', color: '#1E90FF' },
-      delivered: { text: 'Delivered', color: '#4CAF50' },
-      cancelled: { text: 'Cancelled', color: '#999' },
+      "PENDING": { text: 'To Pay', color: '#FF6B35' },
+      "PROCESSING": { text: 'To Ship', color: '#F7931E' },
+      "SHIPPED": { text: 'To Receive', color: '#1E90FF' },
+      "DELIVERED": { text: 'Delivered', color: '#4CAF50' },
+      "CANCELLED": { text: 'Cancelled', color: '#999' },
     };
     return statusMap[status] || { text: status, color: '#999' };
-  };
-
-  const handlePayNow = (orderId) => {
-    console.log('Pay now for order:', orderId);
-    // Navigate to payment page or open payment modal
   };
 
   const handleCancelOrder = (orderId) => {
@@ -146,215 +61,224 @@ const Purchase = () => {
     // Navigate to order details page
   };
 
-  const filteredOrders = getFilteredOrders();
-
+  const allResults = data?.pages.flat() ?? [];
+  console.log(data, "data!!")
+  console.log(allResults, "All Results")
+ 
   return (
     <Container>
-      <Header>
-        <Title>My Orders</Title>
-        <SearchBar>
-          <SearchIcon>🔍</SearchIcon>
-          <SearchInput
-            type="text"
-            placeholder="Search by order ID or product name..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </SearchBar>
-      </Header>
+    {
+      error ? (
+        <h2>{error?.data?.message || "Something went wrong"}</h2> 
+      ) : isLoading ? ( 
+        <Spinner />
+      ) : (
+          <>
+          <Header>
+            <Title>My Orders</Title>
+            <SearchBar>
+              <SearchIcon>🔍</SearchIcon>
+              <SearchInput
+                type="text"
+                placeholder="Search by order ID or product name..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </SearchBar>
+          </Header>
 
-      <TabsContainer>
-        <Tab 
-          active={activeTab === 'all'} 
-          onClick={() => setActiveTab('all')}
-        >
-          All
-          <TabCount>{getOrderCount('all')}</TabCount>
-        </Tab>
-        <Tab 
-          active={activeTab === 'to_pay'} 
-          onClick={() => setActiveTab('to_pay')}
-        >
-          To Pay
-          {getOrderCount('to_pay') > 0 && <TabCount>{getOrderCount('to_pay')}</TabCount>}
-        </Tab>
-        <Tab 
-          active={activeTab === 'to_ship'} 
-          onClick={() => setActiveTab('to_ship')}
-        >
-          To Ship
-          {getOrderCount('to_ship') > 0 && <TabCount>{getOrderCount('to_ship')}</TabCount>}
-        </Tab>
-        <Tab 
-          active={activeTab === 'to_receive'} 
-          onClick={() => setActiveTab('to_receive')}
-        >
-          To Receive
-          {getOrderCount('to_receive') > 0 && <TabCount>{getOrderCount('to_receive')}</TabCount>}
-        </Tab>
-        <Tab 
-          active={activeTab === 'delivered'} 
-          onClick={() => setActiveTab('delivered')}
-        >
-          Completed
-          {getOrderCount('delivered') > 0 && <TabCount>{getOrderCount('delivered')}</TabCount>}
-        </Tab>
-        <Tab 
-          active={activeTab === 'cancelled'} 
-          onClick={() => setActiveTab('cancelled')}
-        >
-          Cancelled
-          {getOrderCount('cancelled') > 0 && <TabCount>{getOrderCount('cancelled')}</TabCount>}
-        </Tab>
-      </TabsContainer>
+          <TabsContainer>
+            <Tab 
+              active={activeTab === 'all'} 
+              onClick={() => setActiveTab('all')}
+            >
+              All
+              <TabCount>2</TabCount>
+            </Tab>
+            <Tab 
+              active={activeTab === 'PENDING'} 
+              onClick={() => setActiveTab('PENDING')}
+            >
+              To Pay
+              <TabCount>3</TabCount>
+            </Tab>
+            <Tab 
+              active={activeTab === 'PROCESSING'} 
+              onClick={() => setActiveTab('PROCESSING')}
+            >
+              To Ship
+            <TabCount>4</TabCount>
+            </Tab>
+            <Tab 
+              active={activeTab === 'SHIPPED'} 
+              onClick={() => setActiveTab('SHIPPED')}
+            >
+              To Receive
+              <TabCount>2</TabCount>
+            </Tab>
+            <Tab 
+              active={activeTab === 'DELIVERED'} 
+              onClick={() => setActiveTab('DELIVERED')}
+            >
+              Completed
+              <TabCount>4</TabCount>
+            </Tab>
+            <Tab 
+              active={activeTab === 'CANCELLED'} 
+              onClick={() => setActiveTab('CANCELLED')}
+            >
+              Cancelled
+              <TabCount>8</TabCount>
+            </Tab>
+          </TabsContainer>
 
-      <OrdersContent>
-        {filteredOrders.length === 0 ? (
-          <EmptyState>
-            <EmptyIcon>📦</EmptyIcon>
-            <EmptyText>No orders found</EmptyText>
-            <EmptySubtext>
-              {searchQuery 
-                ? 'Try adjusting your search terms'
-                : `You don't have any ${activeTab === 'all' ? '' : getStatusDisplay(activeTab).text.toLowerCase()} orders yet`
-              }
-            </EmptySubtext>
-          </EmptyState>
-        ) : (
-          <OrdersList>
-            {filteredOrders.map(order => {
-              const statusInfo = getStatusDisplay(order.status);
-              
-              return (
-                <OrderCard key={order.id}>
-                  <OrderHeader>
-                    <OrderInfo>
-                      <OrderId>Order #{order.id}</OrderId>
-                      <OrderDate>{new Date(order.date).toLocaleDateString('en-US', { 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
-                      })}</OrderDate>
-                    </OrderInfo>
-                    <StatusBadge color={statusInfo.color}>
-                      {statusInfo.text}
-                    </StatusBadge>
-                  </OrderHeader>
+          <OrdersContent>
+            {allResults[0].orders.length === 0 ? (
+              <EmptyState>
+                <EmptyIcon>📦</EmptyIcon>
+                <EmptyText>No orders found</EmptyText>
+                <EmptySubtext>
+                  {searchQuery 
+                    ? 'Try adjusting your search terms'
+                    : `You don't have any ${activeTab === 'all' ? '' : getStatusDisplay(activeTab).text.toLowerCase()} orders yet`
+                  }
+                </EmptySubtext>
+              </EmptyState>
+            ) : (
+              <OrdersList>
+                {allResults.map(orders => orders.orders.map(order => {
+                  const statusInfo = getStatusDisplay(order.status);
+                  
+                  return (
+                    <OrderCard key={order.id}>
+                      <OrderHeader>
+                        <OrderInfo>
+                          <OrderId>Order #{order.id}</OrderId>
+                          <OrderDate>{new Date(order.createdAt).toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                          })}</OrderDate>
+                        </OrderInfo>
+                        <StatusBadge color={statusInfo.color}>
+                          {statusInfo.text}
+                        </StatusBadge>
+                      </OrderHeader>
 
-                  <ItemsList>
-                    {order.items.map((item, index) => (
-                      <ItemRow key={index}>
-                        <ItemImage src={item.image} alt={item.name} />
-                        <ItemDetails>
-                          <ItemName>{item.name}</ItemName>
-                          <ItemQuantity>Qty: {item.quantity}</ItemQuantity>
-                        </ItemDetails>
-                        <ItemPrice>{item.price}</ItemPrice>
-                      </ItemRow>
-                    ))}
-                  </ItemsList>
+                      <ItemsList>
+                        {order.orderItems.map((item) => (
+                          <ItemRow key={item.id}>
+                            <ItemImage src={item.product.imageUrl} alt={item.product.name} />
+                            <ItemDetails>
+                              <ItemName>{item.product.name}</ItemName>
+                              <ItemQuantity>Qty: {item.quantity}</ItemQuantity>
+                            </ItemDetails>
+                            <ItemPrice>{item.product.price}</ItemPrice>
+                          </ItemRow>
+                        ))}
+                      </ItemsList>
 
-                  <OrderFooter>
-                    <OrderTotal>
-                      <TotalLabel>Order Total:</TotalLabel>
-                      <TotalAmount>{order.total}</TotalAmount>
-                    </OrderTotal>
+                      <OrderFooter>
+                        <OrderTotal>
+                          <TotalLabel>Order Total:</TotalLabel>
+                          <TotalAmount>{order.payment.amount}</TotalAmount>
+                        </OrderTotal>
 
-                    <OrderActions>
-                      {/* To Pay Status */}
-                      {order.status === 'to_pay' && (
-                        <>
-                          <DeadlineWarning>
-                            Pay before {new Date(order.paymentDeadline).toLocaleDateString()}
-                          </DeadlineWarning>
-                          <ActionButton primary onClick={() => handlePayNow(order.id)}>
-                            Pay Now
-                          </ActionButton>
-                          <ActionButton onClick={() => handleCancelOrder(order.id)}>
-                            Cancel Order
-                          </ActionButton>
-                        </>
+                        <OrderActions>
+                          {/* To Pay Status */}
+                          {order.status === 'PENDING' && (
+                            <>
+                              
+                              <ActionButton onClick={() => handleCancelOrder(order.id)}>
+                                Cancel Order
+                              </ActionButton>
+                            </>
+                          )}
+
+                          {/* To Ship Status */}
+                          {order.status === 'PROCESSING' && (
+                            <>
+                              <InfoText>Your order is being prepared</InfoText>
+                              <ActionButton onClick={() => handleViewDetails(order.id)}>
+                                View Details
+                              </ActionButton>
+                              <ActionButton onClick={() => handleCancelOrder(order.id)}>
+                                Cancel Order
+                              </ActionButton>
+                            </>
+                          )}
+
+                          {/* To Receive Status */}
+                          {order.status === 'SHIPPED' && (
+                            <>
+                              <InfoText>
+                                Estimated delivery: {new Date(order.estimatedDelivery).toLocaleDateString()}
+                              </InfoText>
+                              <ActionButton primary onClick={() => handleTrackOrder(order.id, order.trackingNumber)}>
+                                Track Order
+                              </ActionButton>
+                              <ActionButton onClick={() => handleViewDetails(order.id)}>
+                                View Details
+                              </ActionButton>
+                            </>
+                          )}
+
+                          {/* Delivered Status */}
+                          {order.status === 'DELIVERED' && (
+                            <>
+                              <ActionButton onClick={() => handleViewDetails(order.id)}>
+                                View Details
+                              </ActionButton>
+                              <ActionButton primary onClick={() => handleBuyAgain(order.id)}>
+                                Buy Again
+                              </ActionButton>
+                              <ActionButton>Leave Review</ActionButton>
+                            </>
+                          )}
+
+                          {/* Cancelled Status */}
+                          {order.status === 'CANCELLED' && (
+                            <>
+                              <CancelReason>Reason: {order.cancelReason}</CancelReason>
+                              <ActionButton onClick={() => handleViewDetails(order.id)}>
+                                View Details
+                              </ActionButton>
+                              <ActionButton primary onClick={() => handleBuyAgain(order.id)}>
+                                Buy Again
+                              </ActionButton>
+                            </>
+                          )}
+                        </OrderActions>
+                      </OrderFooter>
+
+                      {/* Additional Info Section */}
+                      {(order.trackingNumber || order.payment.paymentMethod) && (
+                        <AdditionalInfo>
+                          {order.trackingNumber && (
+                            <InfoItem>
+                              <InfoLabel>Tracking Number:</InfoLabel>
+                              <InfoValue>{order.trackingNumber}</InfoValue>
+                            </InfoItem>
+                          )}
+                          <InfoItem>
+                            <InfoLabel>Payment Method:</InfoLabel>
+                            <InfoValue>{order.paymentMethod}</InfoValue>
+                          </InfoItem>
+                        </AdditionalInfo>
                       )}
-
-                      {/* To Ship Status */}
-                      {order.status === 'to_ship' && (
-                        <>
-                          <InfoText>Your order is being prepared</InfoText>
-                          <ActionButton onClick={() => handleViewDetails(order.id)}>
-                            View Details
-                          </ActionButton>
-                          <ActionButton onClick={() => handleCancelOrder(order.id)}>
-                            Cancel Order
-                          </ActionButton>
-                        </>
-                      )}
-
-                      {/* To Receive Status */}
-                      {order.status === 'to_receive' && (
-                        <>
-                          <InfoText>
-                            Estimated delivery: {new Date(order.estimatedDelivery).toLocaleDateString()}
-                          </InfoText>
-                          <ActionButton primary onClick={() => handleTrackOrder(order.id, order.trackingNumber)}>
-                            Track Order
-                          </ActionButton>
-                          <ActionButton onClick={() => handleViewDetails(order.id)}>
-                            View Details
-                          </ActionButton>
-                        </>
-                      )}
-
-                      {/* Delivered Status */}
-                      {order.status === 'delivered' && (
-                        <>
-                          <ActionButton onClick={() => handleViewDetails(order.id)}>
-                            View Details
-                          </ActionButton>
-                          <ActionButton primary onClick={() => handleBuyAgain(order.id)}>
-                            Buy Again
-                          </ActionButton>
-                          <ActionButton>Leave Review</ActionButton>
-                        </>
-                      )}
-
-                      {/* Cancelled Status */}
-                      {order.status === 'cancelled' && (
-                        <>
-                          <CancelReason>Reason: {order.cancelReason}</CancelReason>
-                          <ActionButton onClick={() => handleViewDetails(order.id)}>
-                            View Details
-                          </ActionButton>
-                          <ActionButton primary onClick={() => handleBuyAgain(order.id)}>
-                            Buy Again
-                          </ActionButton>
-                        </>
-                      )}
-                    </OrderActions>
-                  </OrderFooter>
-
-                  {/* Additional Info Section */}
-                  {(order.trackingNumber || order.paymentMethod) && (
-                    <AdditionalInfo>
-                      {order.trackingNumber && (
-                        <InfoItem>
-                          <InfoLabel>Tracking Number:</InfoLabel>
-                          <InfoValue>{order.trackingNumber}</InfoValue>
-                        </InfoItem>
-                      )}
-                      <InfoItem>
-                        <InfoLabel>Payment Method:</InfoLabel>
-                        <InfoValue>{order.paymentMethod}</InfoValue>
-                      </InfoItem>
-                    </AdditionalInfo>
-                  )}
-                </OrderCard>
-              );
-            })}
-          </OrdersList>
-        )}
-      </OrdersContent>
-    </Container>
-  );
+                    </OrderCard>
+                  );
+                }))}
+              </OrdersList>
+            )}
+            {hasNextPage && <Button onClick={handleLoadMore}>{isFetchingNextPage ? "Loading..." : "Load More"}</Button>}
+          </OrdersContent>
+        </>
+      )
+    }
+  </Container>
+  )
+    
 };
 
 // ============ STYLED COMPONENTS ============

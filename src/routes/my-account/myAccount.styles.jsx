@@ -6,8 +6,8 @@ export const Container = styled.div`
   padding: 2rem 0;
 `;
 
+
 export const PageWrapper = styled.div`
-  max-width: 1200px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -36,7 +36,7 @@ export const MenuSection = styled.div`
 `;
 
 export const MenuTitle = styled.div`
-  font-size: 0.75rem;
+  font-size: var(--font-xs);
   font-weight: 600;
   color: #999;
   margin-bottom: 0.75rem;
@@ -61,11 +61,11 @@ export const MenuItem = styled.div`
 `;
 
 export const MenuIcon = styled.span`
-  font-size: 1.2rem;
+  font-size: var(--font-xs);
 `;
 
 export const MenuText = styled.span`
-  font-size: 0.9rem;
+  font-size: var(--font-xs);
   font-weight: ${props => props.active ? '600' : '500'};
 `;
 

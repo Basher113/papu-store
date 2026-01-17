@@ -9,11 +9,12 @@ export const Wrapper = styled.section`
 
 export const ProductCarouselContainer = styled.div`
   display: grid;
-  gap: 1.5rem;
+  gap: 0.5rem;
   padding: 0 1rem;
 `
 
 export const CategoryTitle = styled.div`
+  padding-left: 1rem;
   font-weight: 700;
   font-size: var(--font-m);
   text-transform: capitalize;

@@ -5,14 +5,12 @@ export const Wrapper = styled.div`
   display: grid;
   grid-template-rows: 200px 150px;
   gap: 1rem;
-  
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  box-shadow: rgba(65, 65, 65, 0.47) 0px 2px 8px 0px;
   padding: 1rem;
   border-radius: 5px;
   min-height: 300px;
   cursor: pointer;
-  transition: transform 0.4s linear;
+  transition: transform 0.2s linear;
 
   &:hover {
     transform: scale(1.05)

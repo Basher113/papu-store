@@ -16,6 +16,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   /* 4. Add accessible line-height */
   line-height: 1.5;
@@ -81,7 +85,8 @@ ul {
 
 .carousel-item {
   /* styles for the carousel items */
-  padding-left: 0.8rem;
+  padding: 1rem;
+  
 }
 
 img, picture {

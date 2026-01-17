@@ -6,6 +6,7 @@ import { ProductCarouselContainer, Wrapper, CategoryTitle, ViewAllButton, Skelet
 import { useNavigate } from "react-router-dom"
 import Categories from "./components/categories/Categories"
 import { useGetProductsInCategoryInfiniteQuery } from "../../reducers/slice/products/product.slice"
+import { productCarouselResponsive } from "../../utils/carousel/carousel"
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const LandingPage = () => {
       <Hero />
       <ProductCarouselContainer>
         <CategoryTitle>Best selling products</CategoryTitle>
-        <CustomCarousel>
+        <CustomCarousel responsive={productCarouselResponsive}>
           {
             error ? (
               <div>{error?.data?.message || "Something went wrong."} </div>

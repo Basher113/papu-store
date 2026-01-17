@@ -10,7 +10,7 @@ const PaymentSummary = ({cartItems}) => {
   }, 0);
   const products = cartItems.map(cartItem => ({...cartItem.product, quantity: cartItem.quantity}));
 
-  const handleProcessCheckout = () => navigate("/checkout", {state: {products: products, subTotal: subTotal}});
+  const handleProcessCheckout = () => navigate("/checkout", {state: {products: products, subTotal: subTotal, isCheckoutFromCart:true}});
 
   return (
     <Wrapper>

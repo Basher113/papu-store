@@ -1,6 +1,6 @@
 import { useGetCurrentUserQuery } from "../../../../reducers/slice/users/user.slice";
 import { ContentSection, SectionTitle, Divider } from "../../shared.styles";
-import { ProfileCard, ProfileHeader, Avatar, ProfileInfo, UserName, UserEmail, EditButton, InfoGrid, InfoItem, InfoLabel, InfoValue } from "./profile.styles";
+import { ProfileCard, ProfileHeader, Avatar, ProfileInfo, UserName, EditButton, InfoGrid, InfoItem, InfoLabel, InfoValue } from "./profile.styles";
 import Spinner from "../../../../components/spinner/Spinner"
 import { useState } from "react";
 import EditProfile from "./components/edit-profile/EditProfile";
@@ -15,10 +15,10 @@ const Profile = () => {
     <SectionTitle>My Profile</SectionTitle>
     <ProfileCard>
       <ProfileHeader>
-        <Avatar src="https://i.pinimg.com/1200x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg" alt={currentUser.username} />
+        
         <ProfileInfo>
+          <Avatar src="https://i.pinimg.com/1200x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg" alt={currentUser.username} />
           <UserName>{currentUser.username}</UserName>
-          <UserEmail>{currentUser.email}</UserEmail>
         </ProfileInfo>
         <EditButton onClick={() => setShowEditProfile(true)}>Edit Profile</EditButton>
       </ProfileHeader>

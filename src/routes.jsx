@@ -9,6 +9,8 @@ import AuthenticatedRoutes from "./routes/authenticated-routes/AuthenticatedRout
 import Checkout from "./routes/checkout/Checkout";
 import OrderConfirmation from "./routes/order-confirmation/OrderConfirmation";
 import MyAccount from "./routes/my-account/MyAccount";
+import About from "./routes/about/About";
+import Contact from "./routes/contact/Contact";
 export const routes = [
   {
     path: "/",
@@ -38,6 +40,16 @@ export const routes = [
       {
         path: "checkout/",
         element: <Checkout />
+      },
+
+      {
+        path: "about",
+        element: <About />
+      },
+
+      {
+        path: "contact",
+        element: <Contact />
       },
       
       {

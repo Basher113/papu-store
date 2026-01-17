@@ -50,27 +50,18 @@ export const SearchInput = styled.input`
 
 export const TabsContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 2rem;
   border-bottom: 2px solid #f0f0f0;
-  overflow-x: auto;
   padding-bottom: 0;
-
-  &::-webkit-scrollbar {
-    height: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #ddd;
-    border-radius: 4px;
-  }
 `;
 
 export const Tab = styled.button`
   background: none;
   border: none;
   padding: 1rem 1.5rem;
-  font-size: 0.95rem;
+  font-size: var(font-xs);
   font-weight: 600;
   color: ${props => props.active ? '#DB4444' : '#666'};
   border-bottom: 3px solid ${props => props.active ? '#DB4444' : 'transparent'};

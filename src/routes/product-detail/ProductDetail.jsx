@@ -13,7 +13,7 @@ const ProductDetail = () => {
   const handleBuyNow = () => {
     
     const subTotal = parseFloat(data.price); // for some reason the type of price is string
-    navigate("/checkout", {state: {products: [{...data, quantity: 1}], subTotal }});
+    navigate("/checkout", {state: {products: [{...data, quantity: 1}], subTotal, isCheckoutFromCart:false }});
   }
 
   

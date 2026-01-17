@@ -22,41 +22,42 @@ const UserProfile = () => {
     }
   }
 
-  useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (!dropdownIsVisible && dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setDropdownIsVisible(false);
-            }
-        }
+ useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (
+      dropdownIsVisible && 
+      dropdownRef.current && 
+      !dropdownRef.current.contains(event.target)
+    ) {
+      setDropdownIsVisible(false);
+    }
+  };
 
-        window.addEventListener('click', handleClickOutside)
-
-        // Cleanup function to remove event listener for memory leaks, event collisions etc...
-        return () => {
-            window.removeEventListener('click', handleClickOutside);
-        };
-    }, [dropdownIsVisible])
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, [dropdownIsVisible]);
 
   return (
 
-    <Wrapper>
+    <Wrapper ref={dropdownRef}>
       <img src={profileSvg} onClick={toggleDropdownHandler}/>
 
       {
-        dropdownIsVisible && 
-        <DropDownContents>
-          <DropDownContent onClick={() => navigate("user?type=profile")}>
-            My Account
-          </DropDownContent>
+        dropdownIsVisible && (
+          <DropDownContents >
+            <DropDownContent onClick={() => navigate("user?type=profile")}>
+              My Account
+            </DropDownContent>
 
-          <DropDownContent onClick={() => navigate("user?type=purchase")}>
-            My Purchase
-          </DropDownContent>
+            <DropDownContent onClick={() => navigate("user?type=purchase")}>
+              My Purchase
+            </DropDownContent>
 
-          <DropDownContent onClick={handleLogout}>
-            Logout
-          </DropDownContent>
-        </DropDownContents>
+            <DropDownContent onClick={handleLogout}>
+              Logout
+            </DropDownContent>
+          </DropDownContents>
+        )
       }
     </Wrapper>
     

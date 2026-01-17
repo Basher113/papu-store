@@ -7,8 +7,9 @@ export const ProfileCard = styled.div`
 
 export const ProfileHeader = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
 `;
 
 export const Avatar = styled.img`
@@ -16,23 +17,28 @@ export const Avatar = styled.img`
   height: 80px;
   border-radius: 50%;
   object-fit: cover;
+
+  @media (max-width: 768px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 export const ProfileInfo = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
   flex: 1;
 `;
 
 export const UserName = styled.h3`
-  font-size: 1.25rem;
+  font-size: var(--font-m);
   font-weight: 600;
   color: #000;
   margin-bottom: 0.25rem;
 `;
 
-export const UserEmail = styled.p`
-  color: #666;
-  font-size: 0.9rem;
-`;
+
 
 export const EditButton = styled.button`
   background: #DB4444;
@@ -43,7 +49,7 @@ export const EditButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-
+  font-size: var(--font-xs);
   &:hover {
     background: #c23a3a;
   }
@@ -64,13 +70,13 @@ export const InfoGrid = styled.div`
 export const InfoItem = styled.div``;
 
 export const InfoLabel = styled.div`
-  font-size: 0.85rem;
+  font-size: var(--font-xs);
   color: #999;
   margin-bottom: 0.5rem;
 `;
 
 export const InfoValue = styled.div`
-  font-size: 1rem;
+  font-size: var(--font-s);
   color: #000;
   font-weight: 500;
 `;

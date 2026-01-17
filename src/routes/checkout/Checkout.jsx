@@ -4,10 +4,11 @@ import { Wrapper,  BillingDetailsForm, FormTitle, InputGroup, OrderInformation, 
 import { ProductRow } from "../cart/components/cart-product/cartProduct.styles";
 import { useLocation, useNavigate } from "react-router-dom"
 import { truncateStr } from "../../utils/truncate/truncate";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import GcashIcon from "../../assets/icons/gcash.webp"
 import { useCreateOrderCashOnDeliveryMutation, useCreateOrderPayOnPaymongoMutation } from "../../reducers/slice/order/order.slice";
+import { useGetUserAddressesQuery, useGetDefaultAddressQuery, useAddAddressMutation, useUpdateAddressMutation } from "../../reducers/slice/address/address.slice";
 import { toast } from "react-toastify";
 
 const defaultFormFields = {
@@ -25,36 +26,89 @@ const Checkout = () => {
   const {state} = location;
   const [paymentMethod, setPaymentMethod] = useState("cashOnDelivery");
   const [formFields, setFormFields] = useState(defaultFormFields);
+  const [isEditing, setIsEditing] = useState(false);
   const [cashOnDelivery, {isLoading: cashOnDeliveryLoading, error: cashOnDeliveryError}] = useCreateOrderCashOnDeliveryMutation();  // eslint-disable-line
   const [paymongoGateway, {isLoading: paymongoLoading, error: paymongoError}] = useCreateOrderPayOnPaymongoMutation();  // eslint-disable-line
-  const {products = [], subTotal} = state;
+  const {products = [], subTotal, isCheckoutFromCart} = state;
   const handlePaymentMethod = (e) => {
     setPaymentMethod(e.target.value);
   }
 
+  console.log(isCheckoutFromCart);
+
+  const {data: addressResponse, isLoading: addressResponseLoading} = useGetUserAddressesQuery();
+  const { data: defaultAddressResponse, isLoading: defaultAddressResponseLoading} = useGetDefaultAddressQuery();
+  const [addAddress] = useAddAddressMutation();
+  const [updateAddress] = useUpdateAddressMutation();
+  console.log(defaultAddressResponse);
+
+
+  const addresses = addressResponse || [];
+
+  const defaultAddress = defaultAddressResponse || null;
+
+  useEffect(() => {
+    if (defaultAddress) {
+      setFormFields({
+        fullName: defaultAddress.fullName || "",
+        phoneNumber: defaultAddress.phoneNumber || "",
+        street: defaultAddress.street || "",
+        barangay: defaultAddress.barangay || "",
+        city: defaultAddress.city || "",
+        postalCode: defaultAddress.postalCode || "",
+      });
+    }
+  }, [defaultAddress]);
+
+  console.log(defaultAddress, "default address");
+
+  if (defaultAddressResponseLoading) return;
+  if (addressResponseLoading) return;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (paymentMethod == "cashOnDelivery") {
-      try {
-        //
-        await cashOnDelivery({products, total: subTotal > 1000 ? subTotal : subTotal + 50, paymentMethod, addressData: formFields}).unwrap()
-        navigate("/");
-        toast.success("Succesful Order.");
-      } catch (err) {
-        console.log("cash on delivery error:", err);
+
+    try {
+      // CREATE
+      if (addresses.length === 0) {
+        await addAddress(formFields).unwrap();
       }
-    } else {
-      try {
-        const response = await paymongoGateway({products, total: subTotal, paymentMethod, addressData: formFields}).unwrap()
-        
+
+      // UPDATE
+      if (addresses.length > 0 && isEditing && defaultAddress) {
+        await updateAddress({ id: defaultAddress.id, ...formFields }).unwrap();
+        setIsEditing(false);
+      }
+
+      // ORDER
+      if (paymentMethod === "cashOnDelivery") {
+        const response = await cashOnDelivery({
+          products,
+          addressData: formFields,
+          total: subTotal > 1000 ? subTotal : subTotal + 50,
+          paymentMethod,
+          isCheckoutFromCart
+        }).unwrap();
+
+        sessionStorage.setItem("sessionId", response.orderId);
+        window.location.href = response.checkoutUrl;
+      } else {
+        const response = await paymongoGateway({
+          products,
+          addressData: formFields,
+          total: subTotal,
+          paymentMethod,
+          isCheckoutFromCart
+        }).unwrap();
+
         sessionStorage.setItem("sessionId", response.sessionId);
         window.location.href = response.checkoutUrl;
-        
-      } catch (err) {
-        console.log("cash on delivery error:", err);
       }
-    } 
-  }
+    } catch (err) {
+      console.error(err);
+      toast.error(err?.data?.message || "Checkout failed");
+    }
+  };
 
   const handleChange = (e) => {
     
@@ -68,40 +122,48 @@ const Checkout = () => {
     <Wrapper>
       <FormTitle>Billing Details</FormTitle>
       <BillingDetailsForm method="POST" onSubmit={handleSubmit}>
+       
         <BillingDetailsInputs >
         
+        
         <InputGroup>
-          <label htmlFor="first-name">Full Name*</label>
-          <input type="text" id="first-name" name="fullName" onChange={handleChange} required/>
+          <label htmlFor="full-name">Full Name*</label>
+          <input type="text" id="full-name" name="fullName" value={formFields.fullName} onChange={handleChange} disabled={addresses.length > 0 && !isEditing} required/>
         </InputGroup>
          <InputGroup>
           <label htmlFor="phone-number">Phone Number*</label>
-          <input type="text" id="phone-number" name="phoneNumber" onChange={handleChange} required/>
+          <input type="text" id="phone-number" name="phoneNumber" value={formFields.phoneNumber} onChange={handleChange} disabled={addresses.length > 0 && !isEditing} required/>
         </InputGroup>
         <InputGroup>
           <label htmlFor="street-address">Street Name, Building, House Number*</label>
-          <input type="text" id="street-address" name="street" onChange={handleChange} required/>
+          <input type="text" id="street-address" name="street" value={formFields.street} onChange={handleChange} disabled={addresses.length > 0 && !isEditing} required/>
         </InputGroup>
 
         <InputGroup>
           <label htmlFor="barangay-address">Barangay | Village*</label>
-          <input type="text" id="barangay-address" name="barangay" onChange={handleChange} required/>
+          <input type="text" id="barangay-address" name="barangay" value={formFields.barangay} onChange={handleChange} disabled={addresses.length > 0 && !isEditing} required/>
         </InputGroup>
 
         <InputGroup>
           <label htmlFor="city-address">City*</label>
-          <input type="text" id="city-address" name="city" onChange={handleChange} required/>
+          <input type="text" id="city-address" name="city" value={formFields.city} onChange={handleChange} disabled={addresses.length > 0 && !isEditing} required/>
         </InputGroup>
 
         <InputGroup>
-          <label htmlFor="barangay-address">Postal Code*</label>
-          <input type="text" id="barangay-address" name="postalCode" onChange={handleChange} required/>
+          <label htmlFor="postal-code">Postal Code*</label>
+          <input type="text" id="postal-code" name="postalCode" value={formFields.postalCode} onChange={handleChange} disabled={addresses.length > 0 && !isEditing} required/>
         </InputGroup>
 
-        <InputGroup className="checkbox">
-          <input type="checkbox" id="save-info-checkbox"/>
-          <label htmlFor="save-info-checkbox">Set as default address. <span>**This will set as default for your first order.</span></label>
-        </InputGroup>
+        {addresses.length === 0 && (
+          <span>**This will set as your default address.</span>
+        )
+        }
+
+        {addresses.length > 0 && !isEditing && (
+          <Button type="button" onClick={() => setIsEditing(true)}>
+            Update Address
+          </Button>
+        )}
 
       </BillingDetailsInputs>
       <OrderInformation>
@@ -136,10 +198,6 @@ const Checkout = () => {
         <Button>{cashOnDeliveryLoading || paymongoLoading ? "Loading..." : "Place Order"}</Button>
       </OrderInformation>
       </BillingDetailsForm>
-      
-
-
-      
     </Wrapper>
   )
 }

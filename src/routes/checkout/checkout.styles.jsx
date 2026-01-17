@@ -46,16 +46,10 @@ export const InputGroup = styled.div`
   &.checkbox { // Checkbox style
     flex-direction: row;
     gap: 1rem;
-
-
     & > label {
       font-size: var(--font-xs);
       color: black;
       
-    }
-
-    & span {
-      color: rgba(0, 0, 0, 0.66)    
     }
   }
 

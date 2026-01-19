@@ -2,9 +2,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import urlSecrets from '../../../secrets/url.secret';
 
+console.log(urlSecrets.serverUrl);
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: urlSecrets.ngrokTestServerUrl,
+  baseUrl: urlSecrets.serverUrl,
   credentials: "include",
 });
 

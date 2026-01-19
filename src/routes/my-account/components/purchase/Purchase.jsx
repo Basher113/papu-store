@@ -7,7 +7,7 @@ import { Container,
   ItemImage, ItemDetails, ItemName, ItemQuantity, ItemPrice, 
   OrderFooter, OrderTotal, OrderActions, TotalLabel, TotalAmount, ActionButton, DeadlineWarning, InfoText, CancelReason, AdditionalInfo,
   InfoItem, InfoValue, InfoLabel, EmptyIcon, EmptyState, EmptySubtext, EmptyText
-   } from './purchase.styles';
+   } from './Purchase.styles';
 
 import { useGetOrdersInfiniteQuery } from '../../../../reducers/slice/order/order.slice';
 import Button from '../../../../components/button/Button';

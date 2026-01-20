@@ -27,7 +27,7 @@ const LandingPage = () => {
               [0, 1, 2, 3, 4, 5].map(index => <SkeletonProductCard key={index}/>)
             ) : data ? (
               allResults.map(res =>
-              res.products.length > 0
+              res?.products
                 ? res.products.map((product) => (
                     <ProductCard key={product.id} product={product}/>
                   ))

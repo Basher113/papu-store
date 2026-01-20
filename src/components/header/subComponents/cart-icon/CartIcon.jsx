@@ -3,10 +3,10 @@ import icon from "../../../../assets/icons/cart.svg";
 import { useGetCartQuery } from "../../../../reducers/slice/carts/cart.slice";
 import { useNavigate } from "react-router-dom";
 const CartIcon = () => {
-  const {data, isLoading,} = useGetCartQuery();
+  const {data, } = useGetCartQuery();
   const navigate = useNavigate();
   console.log(data);
-  if (isLoading) return;
+  
 
   return (
     <Wrapper onClick={() => navigate("cart")}>

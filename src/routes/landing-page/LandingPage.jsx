@@ -12,7 +12,6 @@ const LandingPage = () => {
   const navigate = useNavigate();
   let {data, isLoading, error,} = useGetProductsInCategoryInfiniteQuery("computer") // Will change later!.
   const allResults = data?.pages.flat() ?? [];
-  console.log(allResults);
 
 
   return (
@@ -27,7 +26,13 @@ const LandingPage = () => {
             ) : isLoading ? (
               [0, 1, 2, 3, 4, 5].map(index => <SkeletonProductCard key={index}/>)
             ) : data ? (
-              allResults.map(res => res.products.map((product) => <ProductCard key={product.id} product={product}/>))
+              allResults.map(res =>
+              res.products.length > 0
+                ? res.products.map((product) => (
+                    <ProductCard key={product.id} product={product}/>
+                  ))
+                : null
+            )
             ) : (
               <div>No data found</div>
             )

@@ -55,7 +55,7 @@ const Header = () => {
             <li><Link to="/contact">Contact</Link></li>
             <li><Link to="/about">About</Link></li>
             <li><a href="/#categories-section">Categories</a></li>
-            {!currentUser && !error && <li><Link to="/login">Login</Link></li>}
+            {!currentUser && <li><Link to="/login">Login</Link></li>}
           </ul>
         </MainNav>
 

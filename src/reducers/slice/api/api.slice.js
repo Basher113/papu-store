@@ -9,7 +9,6 @@ const baseQuery = fetchBaseQuery({
   credentials: "include",
 });
 
-console.log(urlSecrets.serverUrl);
 
 // CHECK OUT FOR REVIEW: https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#automatic-re-authorization-by-extending-fetchbasequery
 const baseQueryWithReauth = async (args, api, extraOptions) => {

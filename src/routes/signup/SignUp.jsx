@@ -5,6 +5,7 @@ import { Wrapper, AuthContentContainer, ImageContainer, FormContainer, FormHeade
 import Button from "../../components/button/Button";
 import { useRegisterUserMutation } from "../../reducers/slice/users/user.slice";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../components/spinner/Spinner";
 
 const defaultFormFields = {
   email: "",
@@ -36,6 +37,8 @@ const SignUp = () => {
     }
   }
 
+  
+
   return (
     <Wrapper>
       <AuthContentContainer>
@@ -65,11 +68,11 @@ const SignUp = () => {
             </div>
             <div>
               <input onChange={handleChange} type="password" placeholder="Confirm Password" name="confirmPassword" value={confirmPassword}/>
-              {error?.data?.errors?.confirmPassword && <ErrorMessage>{error.data.errors.confirmPassword[0]}</ErrorMessage>}
+              {error?.data?.errors?.passwordConfirmation && <ErrorMessage>{error.data.errors.passwordConfirmation[0]}</ErrorMessage>}
             </div>
           </FormInputContainer>
           <FormButtonContainer>
-            <Button buttonType="base" type="submit" disabled={isLoading}>Create Account</Button>
+            <Button buttonType="base" type="submit" disabled={isLoading} >{isLoading ? <Spinner /> : "Create Account"}</Button>
           </FormButtonContainer>
           <AuthFooter>
             <div>Already have an account?</div>

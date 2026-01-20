@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   
-  height: 60vh;
+  height: 80%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -28,10 +28,8 @@ export const Container = styled.div`
     height: 50px;
     border: 3px solid rgba(195, 195, 195, 0.6);
     border-radius: 50%;
-    border-top-color: #636767;
+    border-top-color: #DB4444;
     animation: spin 1s ease-in-out infinite;
     -webkit-animation: spin 1s ease-in-out infinite;
 
 `
-
-

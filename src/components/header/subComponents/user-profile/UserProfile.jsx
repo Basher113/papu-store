@@ -9,7 +9,7 @@ const UserProfile = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const [dropdownIsVisible, setDropdownIsVisible] = useState(false)
-  const [logout, {isLoading: logoutLoading, isSuccess: logoutSuccess}] = useLogoutUserMutation();
+  const [logout, {isLoading: logoutLoading, }] = useLogoutUserMutation();
   const toggleDropdownHandler = () => {
     setDropdownIsVisible(!dropdownIsVisible)
   }
@@ -57,7 +57,7 @@ const UserProfile = () => {
             </DropDownContent>
 
             <DropDownContent onClick={handleLogout}>
-              {logoutLoading ? "Loading..." : "Logout"}
+              {logoutLoading ? <Spinner /> : "Logout"}
             </DropDownContent>
           </DropDownContents>
         )

@@ -9,8 +9,8 @@ import { categoriesCarouselResponsive } from "../../../../utils/carousel/carouse
 
 const Categories = () => {
   const navigate = useNavigate();
-  const {data: categories, isLoading,} = useGetCategoriesQuery()
-  if (isLoading) return;
+  const {data: categories, isLoading, error, isError} = useGetCategoriesQuery()
+  if (isLoading || error, isError) return;
   return (
     <Wrapper id="categories-section">
       <Title>Browse By Category</Title>

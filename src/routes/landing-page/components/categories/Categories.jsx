@@ -4,13 +4,16 @@ import { useNavigate } from "react-router-dom"
 import { useGetCategoriesQuery } from "../../../../reducers/slice/products/product.slice"
 import CustomCarousel from "../../../../components/custom-carousel/CustomCarousel";
 import { categoriesCarouselResponsive } from "../../../../utils/carousel/carousel";
+import Spinner from "../../../../components/spinner/Spinner";
 
  
 
 const Categories = () => {
   const navigate = useNavigate();
   const {data: categories, isLoading, error, isError} = useGetCategoriesQuery()
-  if (isLoading || error, isError) return;
+  if (error || isError) return;
+
+  if (isLoading) return <Spinner />
   return (
     <Wrapper id="categories-section">
       <Title>Browse By Category</Title>

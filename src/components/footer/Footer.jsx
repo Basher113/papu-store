@@ -19,7 +19,7 @@ const Footer = () => {
           </FooterSection>
 
           <FooterSection>
-            <Title>Vilina</Title>
+            <Title>Papu-Store</Title>
             <LinkList>
               <li>Help center</li>
               <li>How to buy</li>
@@ -45,7 +45,7 @@ const Footer = () => {
           </FooterSection>
 
           <FooterSection>
-            <Title>Download Vilina App</Title>
+            <Title>Download App</Title>
             <DowloadSection>
               <li><img src={Qr} alt="qr code" loading="lazy" width="50" height="50" /></li>
               <li>

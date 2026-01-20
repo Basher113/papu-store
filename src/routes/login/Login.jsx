@@ -6,6 +6,7 @@ import urlSecrets from "../../secrets/url.secret";
 
 import { Wrapper, AuthContentContainer, ImageContainer, FormContainer, FormHeader, FormInputContainer, FormButtonContainer, ForgetPasswordLink, AuthFooter, LoginAndSignUpLink, ErrorMessage } from "../../components/auth-form/authForm.styles";
 import Button from "../../components/button/Button";
+import Spinner from "../../components/spinner/Spinner"
 import { toast } from "react-toastify";
 const defaultFormFields = {
   email: "",
@@ -16,7 +17,7 @@ const Login = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const {email, password} = formFields;
 
-  const [login, {isLoading, isError, error}] = useLoginUserMutation();
+  const [login, {isLoading, isError, error,}] = useLoginUserMutation();
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -39,6 +40,7 @@ const Login = () => {
     window.location.href = loginWithGoogleUrl;
   }
 
+  if (isLoading) return <Spinner />
   return (
     <Wrapper>
       <AuthContentContainer>

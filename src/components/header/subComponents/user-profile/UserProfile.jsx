@@ -4,11 +4,12 @@ import { useLogoutUserMutation } from "../../../../reducers/slice/users/user.sli
 import { toast } from "react-toastify";
 import { DropDownContent, DropDownContents, Wrapper } from "./userProfile.styles";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../../spinner/Spinner";
 const UserProfile = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const [dropdownIsVisible, setDropdownIsVisible] = useState(false)
-  const [logout] = useLogoutUserMutation();
+  const [logout, {isLoading: logoutLoading, isSuccess: logoutSuccess}] = useLogoutUserMutation();
   const toggleDropdownHandler = () => {
     setDropdownIsVisible(!dropdownIsVisible)
   }
@@ -17,6 +18,7 @@ const UserProfile = () => {
     try {
       await logout().unwrap();
       toast.success("logout successfully!")
+      window.location.href = "/"
     } catch (error) {
       console.log("Error logout", error)
     }
@@ -37,6 +39,7 @@ const UserProfile = () => {
     return () => window.removeEventListener("click", handleClickOutside);
   }, [dropdownIsVisible]);
 
+  
   return (
 
     <Wrapper ref={dropdownRef}>
@@ -54,7 +57,7 @@ const UserProfile = () => {
             </DropDownContent>
 
             <DropDownContent onClick={handleLogout}>
-              Logout
+              {logoutLoading ? "Loading..." : "Logout"}
             </DropDownContent>
           </DropDownContents>
         )

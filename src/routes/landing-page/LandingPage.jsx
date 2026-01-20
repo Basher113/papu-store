@@ -19,25 +19,15 @@ const LandingPage = () => {
       <Hero />
       <ProductCarouselContainer>
         <CategoryTitle>Best selling products</CategoryTitle>
-        <CustomCarousel responsive={productCarouselResponsive}>
-          {
-            error ? (
-              <div>{error?.data?.message || "Something went wrong."} </div>
-            ) : isLoading ? (
-              [0, 1, 2, 3, 4, 5].map(index => <SkeletonProductCard key={index}/>)
-            ) : data ? (
-              allResults.map(res =>
-              res.products.length > 0
-                ? res.products.map((product) => (
-                    <ProductCard key={product.id} product={product}/>
-                  ))
-                : null
-            )
-            ) : (
-              <div>No data found</div>
-            )
-          }
-        </CustomCarousel>
+        {!error && !isLoading && allResults.length > 0 && (
+          <CustomCarousel responsive={productCarouselResponsive}>
+            {allResults.flatMap(res =>
+              res.products?.map(product => (
+                <ProductCard key={product.id} product={product} />
+              )) ?? []
+            )}
+          </CustomCarousel>
+        )}
         {<ViewAllButton onClick={() => navigate("#")}>View All Products</ViewAllButton>}
       </ProductCarouselContainer>
       
